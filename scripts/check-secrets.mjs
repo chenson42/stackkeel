@@ -51,7 +51,7 @@ export const SAFE_EMAIL_DOMAIN_RE =
 export const GIT_REMOTE_EMAIL_RE = /^git@(github\.com|gitlab\.com|bitbucket\.org)$/i;
 
 // A connection-string userinfo segment is coincidentally email-shaped once
-// you look at just the "word@word.tld" tail — these local-parts are
+// you look at just the "word@word.tld" tail — these local-parts are // leak-ok: the rule's own doc comment
 // placeholder credential words, never a real person's mailbox.
 export const CONNECTION_STRING_LOCAL_PART_RE =
   /^(password|user|pass|admin|root|xxxx|ci|app|postgres|neondb_owner)$/i;

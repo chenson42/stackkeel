@@ -15,7 +15,7 @@ describe("isSignInAllowed", () => {
     it("allows an active user looked up by id", async () => {
       const find = vi.fn().mockResolvedValue(active);
       const ok = await isSignInAllowed(
-        { user: { id: "u1", email: "a@b.com" }, account: { provider: "credentials" } },
+        { user: { id: "u1", email: "a@example.com" }, account: { provider: "credentials" } },
         find,
       );
       expect(ok).toBe(true);
@@ -63,7 +63,7 @@ describe("isSignInAllowed", () => {
 
     it("blocks an existing but deactivated account", async () => {
       const ok = await isSignInAllowed(
-        { user: { id: "sub", email: "a@b.com" }, account: { provider: "google" } },
+        { user: { id: "sub", email: "a@example.com" }, account: { provider: "google" } },
         async () => inactive,
       );
       expect(ok).toBe(false);
@@ -92,10 +92,10 @@ describe("isSignInAllowed", () => {
       // error → AccessDenied for every first-time Google login.
       const find = vi.fn().mockResolvedValue(active);
       await isSignInAllowed(
-        { user: { id: "117648-not-a-uuid", email: "a@b.com" }, account: { provider: "google" } },
+        { user: { id: "117648-not-a-uuid", email: "a@example.com" }, account: { provider: "google" } },
         find,
       );
-      expect(find).toHaveBeenCalledWith({ by: "email", value: "a@b.com" });
+      expect(find).toHaveBeenCalledWith({ by: "email", value: "a@example.com" });
       expect(find).not.toHaveBeenCalledWith(expect.objectContaining({ by: "id" }));
     });
 
