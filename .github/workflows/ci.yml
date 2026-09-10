@@ -1,0 +1,80 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-test:
+    name: typecheck + lint + build + test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck + lint + build + test
+        run: pnpm turbo run typecheck lint build test
+        env:
+          # Build needs these to resolve, but no live data is hit.
+          DATABASE_URL: "postgres://ci:ci@localhost:5432/ci"
+          DIRECT_DATABASE_URL: "postgres://ci:ci@localhost:5432/ci"
+          AUTH_SECRET: "ci-secret-do-not-use-in-prod"
+          AUTH_URL: "http://localhost:3000"
+          AUTH_TRUST_HOST: "true"
+          AUTH_TOTP_ENCRYPTION_KEY: "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="
+
+      - name: Scripts unit tests
+        run: node --test 'scripts/*.test.mjs'
+
+      - name: Tripwires
+        run: node scripts/run-tripwires.mjs
+
+      - name: Dependency audit (production deps, high+)
+        run: pnpm audit --prod --audit-level=high
+        continue-on-error: true
+
+  # The commit-msg hook only runs where `pnpm install` has installed it —
+  # GitHub web edits and fresh clones bypass it silently. This job re-validates
+  # every PR commit with the same exported validator the hook uses.
+  commit-grammar:
+    name: commit grammar
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: Validate commit messages
+        run: node scripts/validate-commit-range.mjs "origin/${{ github.base_ref }}..HEAD"
+
+  # An unpersonalized starter copy fails CI until /personalize runs (or the
+  # copy explicitly declines via kit.json). This is the loudest signal that
+  # reaches every assistant and every human, not just Claude sessions.
+  kit-check:
+    name: personalization state
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "22"
+
+      - name: kit-check --strict
+        run: node scripts/kit/kit-check.mjs --strict

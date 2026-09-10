@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "kit.json — starter-kit manifest",
+  "type": "object",
+  "required": ["kit", "identity", "modules", "paths", "sync"],
+  "additionalProperties": true,
+  "properties": {
+    "kit": {
+      "type": "object",
+      "required": ["name", "canonicalUrl", "kitVersion"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "canonicalUrl": { "type": "string", "pattern": "^https://" },
+        "kitVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" }
+      }
+    },
+    "identity": {
+      "type": "object",
+      "required": ["role", "personalized"],
+      "properties": {
+        "role": { "enum": ["canonical", "fork"] },
+        "personalized": { "type": "boolean" },
+        "personalizedAt": { "type": ["string", "null"], "pattern": "^\\d{4}-\\d{2}-\\d{2}$" },
+        "personalizationDeclined": { "type": "boolean" },
+        "projectName": { "type": ["string", "null"] },
+        "slug": { "type": ["string", "null"] }
+      }
+    },
+    "modules": {
+      "type": "object",
+      "required": ["apps", "features"],
+      "properties": {
+        "apps": {
+          "type": "object",
+          "additionalProperties": { "type": "boolean" }
+        },
+        "features": {
+          "type": "object",
+          "additionalProperties": { "type": "boolean" }
+        }
+      }
+    },
+    "paths": {
+      "type": "object",
+      "required": ["kitInternal", "personalized", "appSpecific", "removed"],
+      "properties": {
+        "kitInternal": { "type": "array", "items": { "type": "string" } },
+        "personalized": { "type": "array", "items": { "type": "string" } },
+        "appSpecific": { "type": "array", "items": { "type": "string" } },
+        "removed": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["module", "paths", "removedAt"],
+            "properties": {
+              "module": { "type": "string" },
+              "paths": { "type": "array", "items": { "type": "string" } },
+              "removedAt": { "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" }
+            }
+          }
+        }
+      }
+    },
+    "sync": {
+      "type": "object",
+      "required": ["upstream", "downstream"],
+      "properties": {
+        "upstream": {
+          "type": "object",
+          "properties": {
+            "baselineSha": { "type": "string" },
+            "lastSyncedSha": { "type": "string" },
+            "lastSyncedDate": { "type": "string" }
+          }
+        },
+        "downstream": {
+          "type": "object",
+          "properties": {
+            "lastCheckedDate": { "type": "string" },
+            "proposed": { "type": "array" }
+          }
+        }
+      }
+    }
+  }
+}

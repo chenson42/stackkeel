@@ -1,0 +1,56 @@
+{
+  "$schema": "./scripts/kit/kit.schema.json",
+  "kit": {
+    "name": "starterkit",
+    "canonicalUrl": "https://github.com/chenson42/starterkit",
+    "kitVersion": "0.1.0"
+  },
+  "identity": {
+    "role": "canonical",
+    "personalized": false,
+    "personalizedAt": null,
+    "personalizationDeclined": false,
+    "projectName": null,
+    "slug": null
+  },
+  "modules": {
+    "apps": {
+      "portal": true,
+      "admin": true,
+      "shell": true,
+      "mobile": true,
+      "docs-site": true
+    },
+    "features": {
+      "helpdesk": true,
+      "feedback": true,
+      "twoFactor": true,
+      "oidc": true,
+      "emailQueue": true,
+      "whatsNew": true,
+      "flagsAdmin": true,
+      "auditViewer": true
+    }
+  },
+  "paths": {
+    "kitInternal": [
+      "docs-site/src/content/docs/",
+      "docs/product/",
+      "docs/starter-contributions/"
+    ],
+    "personalized": [],
+    "appSpecific": [],
+    "removed": []
+  },
+  "sync": {
+    "upstream": {
+      "baselineSha": "",
+      "lastSyncedSha": "",
+      "lastSyncedDate": ""
+    },
+    "downstream": {
+      "lastCheckedDate": "",
+      "proposed": []
+    }
+  }
+}

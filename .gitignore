@@ -1,0 +1,40 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# builds
+.next/
+out/
+dist/
+.turbo/
+*.tsbuildinfo
+
+# env
+.env
+.env.local
+.env.*.local
+
+# testing
+coverage/
+test-results/
+playwright-report/
+
+# native
+apps/shell/ios/App/Pods/
+apps/shell/android/.gradle/
+apps/shell/android/app/build/
+apps/mobile/.expo/
+apps/mobile/ios/
+apps/mobile/android/
+
+# tooling state (local, never committed)
+.claude/pre-push-ok.json
+.claude/trivial-ok.json
+.claude/session-handoff.jsonl
+.claude/session-handoff.state.json
+.claude/last-user-prompt.json
+.claude/worktrees/
+
+# os
+.DS_Store
