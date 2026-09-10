@@ -1,6 +1,6 @@
-# starterkit
+# stackkeel
 
-![Starterkit banner](docs-site/public/banner.png)
+![Stackkeel banner](docs-site/public/banner.png)
 
 A monorepo starter kit for **cross-AI development** — a production-shaped foundation you
 copy, personalize in one guided session, and build on with whichever AI coding assistant
@@ -57,8 +57,8 @@ standard), and hit the same git-hook + CI enforcement.
 ## Documentation
 
 Full docs (getting started, architecture tour, the workflow, personalization and sync
-guides, module catalog): **https://chenson42.github.io/starterkit** *(docs site lands in
-build Phase 6 — until then, start with [AGENTS.md](./AGENTS.md) and [docs/](./docs/)).*
+guides, module catalog): **https://chenson42.github.io/stackkeel** — or start with
+[AGENTS.md](./AGENTS.md) and [docs/](./docs/) in the repo.
 
 ## Requirements
 

@@ -6,18 +6,18 @@ import starlight from "@astrojs/starlight";
 
 export default defineConfig({
   site: "https://chenson42.github.io",
-  base: "/starterkit",
+  base: "/stackkeel",
   integrations: [
     starlight({
-      title: "Starterkit",
+      title: "Stackkeel",
       description:
         "Cross-AI monorepo starter kit: portal + admin + native shell + native app, with built-in maintenance, helpdesk, theming, and a personalization/sync loop.",
-      logo: { src: "./src/assets/logo.png", alt: "Starterkit mark" },
+      logo: { src: "./src/assets/logo.png", alt: "Stackkeel mark" },
       favicon: "/favicon.png",
       head: [
         {
           tag: "meta",
-          attrs: { property: "og:image", content: "https://chenson42.github.io/starterkit/og.png" },
+          attrs: { property: "og:image", content: "https://chenson42.github.io/stackkeel/og.png" },
         },
         {
           tag: "meta",
@@ -25,7 +25,7 @@ export default defineConfig({
         },
       ],
       social: [
-        { icon: "github", label: "GitHub", href: "https://github.com/chenson42/starterkit" },
+        { icon: "github", label: "GitHub", href: "https://github.com/chenson42/stackkeel" },
       ],
       sidebar: [
         { label: "Start Here", items: [

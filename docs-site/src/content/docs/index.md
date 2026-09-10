@@ -1,23 +1,23 @@
 ---
-title: Starterkit
+title: Stackkeel
 description: Cross-AI monorepo starter kit with portal, admin, native shell, native app, and built-in maintenance.
 template: splash
 hero:
   tagline: A production-shaped monorepo template for teams that build with AI coding assistants — any of them.
   image:
     file: ../../assets/logo.png
-    alt: Starterkit mark
+    alt: Stackkeel mark
   actions:
     - text: Get started
-      link: /starterkit/getting-started/
+      link: /stackkeel/getting-started/
       icon: right-arrow
     - text: GitHub
-      link: https://github.com/chenson42/starterkit
+      link: https://github.com/chenson42/stackkeel
       icon: external
       variant: minimal
 ---
 
-Starterkit is a production-shaped monorepo template for teams that build with AI coding assistants — any of them. The workflow layer uses open standards ([AGENTS.md](https://agents.md) instructions and [Agent Skills](https://agentskills.io) `SKILL.md` files), so Claude Code, Codex, Copilot, Cursor, and Gemini CLI all read the same playbook, and the load-bearing quality gates live in git hooks and CI rather than in any one assistant.
+Stackkeel is a production-shaped monorepo template for teams that build with AI coding assistants — any of them. The workflow layer uses open standards ([AGENTS.md](https://agents.md) instructions and [Agent Skills](https://agentskills.io) `SKILL.md` files), so Claude Code, Codex, Copilot, Cursor, and Gemini CLI all read the same playbook, and the load-bearing quality gates live in git hooks and CI rather than in any one assistant.
 
 ## What's in the box
 

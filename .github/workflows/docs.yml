@@ -20,7 +20,7 @@ concurrency:
 
 jobs:
   build:
-    if: github.repository == 'chenson42/starterkit'
+    if: github.repository == 'chenson42/stackkeel'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -35,7 +35,7 @@ jobs:
         with:
           path: docs-site/dist
   deploy:
-    if: github.repository == 'chenson42/starterkit'
+    if: github.repository == 'chenson42/stackkeel'
     needs: build
     runs-on: ubuntu-latest
     environment:

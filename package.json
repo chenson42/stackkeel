@@ -1,11 +1,11 @@
 {
-  "name": "starterkit",
+  "name": "stackkeel",
   "version": "0.1.0",
   "private": true,
   "description": "Cross-AI monorepo starter kit: portal + admin + native shell + native app, with built-in maintenance, helpdesk, theming, and a personalization/sync loop.",
   "repository": {
     "type": "git",
-    "url": "https://github.com/chenson42/starterkit"
+    "url": "https://github.com/chenson42/stackkeel"
   },
   "license": "MIT",
   "engines": {

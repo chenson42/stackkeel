@@ -3,7 +3,7 @@ title: Personalization
 description: How a fresh copy becomes your project.
 ---
 
-Every copy of the kit starts life claiming to be `starterkit`. The manifest at `kit.json` plus `scripts/kit/kit-check.mjs` decide what that means:
+Every copy of the kit starts life claiming to be `stackkeel`. The manifest at `kit.json` plus `scripts/kit/kit-check.mjs` decide what that means:
 
 | State | Meaning |
 |---|---|
