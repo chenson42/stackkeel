@@ -30,6 +30,7 @@ export default defineConfig({
         { label: "Start Here", items: [
           { slug: "index", label: "Overview" },
           { slug: "why-stackkeel" },
+          { slug: "compare", label: "vs. Other Starters" },
           { slug: "getting-started", label: "Getting Started" },
           { slug: "personalization", label: "Personalization" },
         ]},

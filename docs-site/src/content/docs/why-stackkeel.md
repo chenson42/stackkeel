@@ -1,6 +1,6 @@
 ---
 title: Why Stackkeel Exists
-description: "The idea behind Stackkeel: AI coding agents inverted the old rule that less process is better. When coordination costs API calls instead of meetings, disciplined software process becomes the cheapest way to build. Based on the essay by Chris Henson."
+description: "The idea behind Stackkeel: AI coding agents inverted the old rule that less process is better. When coordination costs API calls instead of meetings, disciplined software process becomes the cheapest way to build."
 ---
 
 For thirty years, the winning move in software was less process. Small teams beat big
@@ -19,13 +19,10 @@ practices we abandoned as too heavyweight, staged reviews, written handoffs, exp
 verification, are suddenly the economical choice. The price chart changed. Most of our
 instincts have not caught up.
 
-Stackkeel's author, Chris Henson, spent three decades as a CTO on the "less process"
-side of that fight. Then an agent flagged a missing file during a routine bug fix,
-something entirely outside the framing of the request. As he put it in the essay this
-kit grew out of:
-
-> The agent that flagged this wasn't writing code. It was running the first phase of a
-> six-phase pipeline.
+Stackkeel's author spent three decades as a CTO on the "less process" side of that
+fight. Then an agent flagged a missing file during a routine bug fix, something
+entirely outside the framing of the request. The agent that flagged it wasn't writing
+code. It was running the first phase of what became a six-phase pipeline.
 
 That observation became a workflow, the workflow became conventions, and the
 conventions, refined across several real products, became this kit.
@@ -34,8 +31,8 @@ conventions, refined across several real products, became this kit.
 
 **Artifacts are the substrate.** Work logs, decision records, and design docs are not
 overhead here. They are how stateless agents hand work to each other, and how a
-project remembers anything at all. "Codified conventions are durable. Uncodified ones
-aren't, because the agent has no working memory."
+project remembers anything at all. Codified conventions are durable; uncodified ones
+are not, because the agent has no working memory.
 
 **Roles create pressure.** The same model prompted as an adversarial analyst finds
 different problems than the same model prompted as an implementer. Stackkeel's
@@ -51,14 +48,10 @@ commit grammar, work-log-before-code, secrets scanning, audit coverage, brand sc
 assumption in phase one cascades confidently through everything downstream. The
 pipeline exists to catch bad framing early, while it is still cheap to fix.
 
-## The kit is the essay, executable
+## The thesis, executable
 
 Everything above ships in the repository as working machinery rather than advice:
 the pipeline in `AGENTS.md` and the agent roster, the memory in `docs/`, the
 enforcement in `scripts/` and CI, and the [lifecycle](/sync/) that keeps projects
 and kit exchanging improvements. Stackkeel was built, reviewed, tested, and released
 by the same workflow it contains.
-
-Read the original essay:
-["Claude Code Did Something I Didn't Expect: It Made Me Want More Software Process"](https://www.linkedin.com/pulse/claude-code-did-something-i-didnt-expect-made-me-want-chris-henson-kjepe/)
-by Chris Henson.
