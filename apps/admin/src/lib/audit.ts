@@ -119,6 +119,11 @@ export const AUDIT_ACTIONS = {
   // Branding (module `core`): the brand row drives every page's rendered
   // identity — a defacement vector, so every save is audited.
   BRANDING_UPDATED: "branding.updated",
+  // Device auth (module `mobile`, 2026-09-11-phase-4-mobile). Operator
+  // revoke of ANY user's device + release-policy edits (the policy can
+  // hard-block every native install, so a save is security-relevant).
+  DEVICE_REVOKED: "device.revoked",
+  APP_RELEASE_POLICY_UPDATED: "app_release.policy_updated",
 } as const;
 
 export type AuditAction = (typeof AUDIT_ACTIONS)[keyof typeof AUDIT_ACTIONS];

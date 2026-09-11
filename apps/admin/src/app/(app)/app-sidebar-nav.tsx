@@ -1,4 +1,4 @@
-import { Users, Inbox, ShieldCheck, Mail, Flag, MessageSquare, KeyRound, LifeBuoy, Palette } from "lucide-react";
+import { Users, Inbox, ShieldCheck, Mail, Flag, MessageSquare, KeyRound, LifeBuoy, Palette, Smartphone, PackageCheck } from "lucide-react";
 import { AppSidebar, type SidebarNavGroup } from "@repo/ui";
 
 // Thin adapter over the shared @repo/ui AppSidebar primitive
@@ -25,6 +25,7 @@ export function AppSidebarNav({
   canFeedback,
   canTickets,
   canBranding,
+  canDevices,
 }: {
   canUsers: boolean;
   canRoles: boolean;
@@ -34,6 +35,7 @@ export function AppSidebarNav({
   canFeedback: boolean;
   canTickets: boolean;
   canBranding: boolean;
+  canDevices: boolean;
 }) {
   const groups: SidebarNavGroup[] = [
     {
@@ -84,13 +86,20 @@ export function AppSidebarNav({
   // "Platform" is this app's first cross-app-configuration group, as
   // distinct from Monitoring (read-only observability) and Directory
   // (identity administration) — 2026-09-05-admin-menu-structure.
-  if (canFlags || canBranding) {
+  if (canFlags || canBranding || canDevices) {
     groups.push({
       id: "platform",
       label: "Platform",
       items: [
         ...(canFlags ? [{ href: "/flags", label: "Feature flags", icon: <Flag /> }] : []),
         ...(canBranding ? [{ href: "/branding", label: "Branding", icon: <Palette /> }] : []),
+        // Device fleet + its update policy are one ADMIN_DEVICES privilege
+        // (module `mobile`): configuration of the native surface, so
+        // Platform, not Monitoring.
+        ...(canDevices ? [{ href: "/devices", label: "Devices", icon: <Smartphone /> }] : []),
+        ...(canDevices
+          ? [{ href: "/app-release", label: "App release", icon: <PackageCheck /> }]
+          : []),
       ],
     });
   }

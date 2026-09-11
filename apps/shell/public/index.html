@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <!-- Offline fallback served ONLY when SHELL_PORTAL_URL was unset at sync
+       time (see capacitor.config.ts). A correctly built shell never shows
+       this page. -->
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Stackkeel</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100svh;
+        display: grid;
+        place-items: center;
+        font-family: system-ui, -apple-system, sans-serif;
+        background: #0f172a;
+        color: #e2e8f0;
+        text-align: center;
+        padding: 2rem;
+      }
+      p { max-width: 28rem; line-height: 1.5; color: #94a3b8; }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Stackkeel</h1>
+      <p>
+        This build was created without a portal URL. Rebuild with
+        <code>SHELL_PORTAL_URL</code> set to your deployed portal, then run
+        <code>pnpm --filter shell cap:sync</code>.
+      </p>
+    </main>
+  </body>
+</html>

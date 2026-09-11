@@ -36,6 +36,7 @@ export default async function AppLayout({
   const canFeedback = hasFeature(session.user.features, FEATURES.ADMIN_FEEDBACK);
   const canTickets = hasFeature(session.user.features, FEATURES.ADMIN_TICKETS);
   const canBranding = hasFeature(session.user.features, FEATURES.ADMIN_BRANDING);
+  const canDevices = hasFeature(session.user.features, FEATURES.ADMIN_DEVICES);
 
   const showMyFeedback = await isFlagEnabled("feedback.status_view");
 
@@ -65,6 +66,7 @@ export default async function AppLayout({
         canFeedback={canFeedback}
         canTickets={canTickets}
         canBranding={canBranding}
+        canDevices={canDevices}
       />
       <main className="flex min-w-0 flex-1 flex-col overflow-hidden">
         <header className="shrink-0 border-b border-border bg-card">

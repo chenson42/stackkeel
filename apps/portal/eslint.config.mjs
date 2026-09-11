@@ -1,4 +1,4 @@
-// Flat ESLint config for the Claude Code Starter.
+// Flat ESLint config for the portal app.
 // Uses Next.js's bundled flat config (covers next, react, react-hooks, typescript,
 // jsx-a11y, import) plus project-specific ignores.
 import nextConfig from "eslint-config-next";

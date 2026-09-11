@@ -104,6 +104,21 @@ export function AccountSettingsContent() {
         />
       </AccountSection>
 
+      <AccountSection
+        title="Devices"
+        description="Native app installs paired to your account."
+      >
+        {/* Same handoff pattern as two-factor: device management (list,
+            revoke, mint a pairing code) is a full route, not dialog content —
+            it renders server-fetched rows and multi-step pairing. */}
+        <a
+          href="/account/devices"
+          className="text-sm font-medium text-primary underline-offset-4 hover:underline"
+        >
+          Manage devices
+        </a>
+      </AccountSection>
+
       {/* Titled "Send feedback", not "Feedback", because that is the exact
           path the home card's "Stop asking" dialog promises: "You can
           re-enable the daily prompt any time from Account settings → Send

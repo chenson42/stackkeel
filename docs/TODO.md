@@ -30,11 +30,13 @@ Single backlog ledger. Reconcile in the same commit that creates or resolves an 
       the apps' next/font loading doesn't switch faces yet); open-tickets count in
       `kit:status`; admin roles UI surfacing `admin.tickets`/`admin.branding` is
       automatic via FEATURE_CATALOG (verified) — no action
-- [ ] Phase 4 — Mobile: `apps/shell` (Capacitor 8 + GoogleSignInPlugin + push
-      scaffolding), portal web bridge (use-is-native, device registrar, deep links,
-      AASA, AppVersionGate + `app_release_policy` + admin editor), `apps/mobile` (Expo +
-      expo-router, secure-store device token, pairing, typed API client, offline queue),
-      server device auth + admin devices page
+- [x] Phase 4 — Mobile (2026-09-11, work-log 2026-09-11-phase-4-mobile):
+      `apps/shell` (Capacitor 8, generated ios/ + android/ committed), portal
+      web bridge (use-is-native, device registrar, deep links, AASA +
+      assetlinks, AppVersionGate + `app_release_policy` + admin editor),
+      `apps/mobile` (Expo + expo-router, secure-store token, pairing, typed
+      API client, offline queue), server device auth + `/account/devices` +
+      admin `/devices` + `/app-release`. Deferred pieces below.
 - [ ] Phase 5 — Meta-layer: personalize skill + `module-registry.json` +
       `strip-module.mjs` + `identity-files.json` + `check-identity-files.mjs`;
       personalize-gate hook; upstream/downstream-sync skills + `kit-sync-reminder.yml`;
@@ -50,5 +52,19 @@ Single backlog ledger. Reconcile in the same commit that creates or resolves an 
 
 - [ ] Admin dashboard tile grid (ADMIN_TILES registry) — `/` currently redirects to `/users`
 - [ ] Wire TopNav/BottomTabs (@repo/ui) as the portal's mobile-forward chrome
-- [ ] Portal account "devices" page — deferred to Phase 4 device auth
+- [x] Portal account "devices" page — shipped in Phase 4 (`/account/devices`)
 - [ ] `check-cross-app-table-collision` tripwire once a fork schema exists
+
+## Phase 4 follow-ups (from the work-log's Phase 6 NOTES)
+
+- [ ] Push notifications: implement `primePushRegistration()` in the portal
+      bridge with `@capacitor/push-notifications` (shell) / `expo-notifications`
+      (mobile); server `push_token` column + PATCH path already exist
+- [ ] Shell native Google Sign-In plugin (backend `google-native` provider is
+      ready; needs a compiled-and-tested native plugin — see apps/shell/README)
+- [ ] Device-token storage upgrade in the shell: Capacitor Preferences →
+      Keychain/EncryptedSharedPreferences plugin for at-rest protection
+- [ ] On-device verification pass (build shell on a real device, pair the Expo
+      app against a running server, verify revocation push-out) — Phase 7
+- [ ] Deep-link scheme registration in the generated native projects
+      (Info.plist URL types / Android intent-filter) when a fork personalizes

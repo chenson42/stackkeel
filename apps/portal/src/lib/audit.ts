@@ -85,67 +85,19 @@ export const AUDIT_ACTIONS = {
   WHATS_NEW_ENTRY_CREATED: "whats_new.entry_created",
   WHATS_NEW_ENTRY_UPDATED: "whats_new.entry_updated",
   WHATS_NEW_ENTRY_DELETED: "whats_new.entry_deleted",
-  // Task management (task-mgmt-1a-inc1-roles-projects, DECISION-030/031).
-  // Projects — written from src/app/(member)/projects/actions.ts and
-  // src/app/(member)/projects/[id]/actions.ts.
-  PROJECT_CREATED: "project.created",
-  PROJECT_ARCHIVED: "project.archived",
-  PROJECT_DELETED: "project.deleted",
-  PROJECT_MEMBER_ADDED: "project.member_added",
-  PROJECT_MEMBER_REMOVED: "project.member_removed",
-  // Child B (2026-08-26-gap-closure-B-soft-delete, DECISION-036/037).
-  // Written from src/app/(member)/projects/actions.ts. PROJECT_RESTORED
-  // fires on a successful restoreProject; PROJECT_UNARCHIVED mirrors
-  // PROJECT_ARCHIVED for symmetry. unarchiveTask gets NO new audit key —
-  // archiveTask itself fires none (attribute-edit-shaped precedent), so
-  // its mirror doesn't either.
-  PROJECT_RESTORED: "project.restored",
-  PROJECT_UNARCHIVED: "project.unarchived",
-  // Global role (Admin/Staff/Volunteer persona) — written from
-  // src/app/(admin)/admin/users/actions.ts. Fires always on a globalRole
-  // change; USER_ROLE_ASSIGNED/USER_ROLE_REMOVED above additionally fire
-  // when the sync touches the userRoles `admin` row.
-  USER_GLOBAL_ROLE_CHANGED: "user.global_role_changed",
-  // Task management (task-mgmt-1a-inc2-tasks-todos, DECISION-030/032).
-  // Written from src/app/(member)/tasks/actions.ts's moveTask — the one
-  // mutation in this increment flagged security-sensitive (Flow 5: moving a
-  // task changes who can see it). TASK_MOVED fires on every move;
-  // TASK_UNSHARED_TO_PERSONAL fires additionally when the move privatizes a
-  // project task (destinationProjectId === null), so a post-hoc query can
-  // find every task a departing member privatized.
-  TASK_MOVED: "task.moved",
-  TASK_UNSHARED_TO_PERSONAL: "task.unshared_to_personal",
-  // Task management (task-mgmt-1a-inc3-labels, DECISION-033). Written from
-  // src/app/(member)/tasks/label-actions.ts (LABEL_CREATED) and
-  // src/app/(admin)/admin/labels/actions.ts (the rest). Plain rename/
-  // recolor (updateLabel) and apply/remove of a label on a project or task
-  // intentionally get NO audit event — same "attribute edit, not
-  // security-sensitive" precedent as updateProject/updateTask; applying a
-  // label never changes who can SEE a task or project, unlike moveTask.
-  LABEL_CREATED: "label.created",
-  LABEL_DEACTIVATED: "label.deactivated",
-  LABEL_REACTIVATED: "label.reactivated",
-  LABEL_DELETED: "label.deleted",
-  LABEL_MERGED: "label.merged",
-  // Gap Closure Child E (2026-08-26-gap-closure-e-admin-verification),
-  // FR-PERM-09. Written from setCanCreateProjectsOverride in
-  // src/app/(admin)/admin/users/[id]/actions.ts. Fires on every real
-  // transition (idempotent no-op writes neither a DB row nor an audit
-  // event) — the audit trail is the correctness backstop for the toggle
-  // being a no-op on Staff/Admin users, per the tech-lead design's Edge
-  // Cases: the server action does not block on globalRole, so a reviewer
-  // reading these rows is the intended way to notice a grant that had no
-  // behavioral effect.
-  USER_PROJECT_CREATE_OVERRIDE_GRANTED: "user.project_create_override.granted",
-  USER_PROJECT_CREATE_OVERRIDE_REVOKED: "user.project_create_override.revoked",
-  // task-auth-onto-roles (DECISION-017), Increment 2. Written from
-  // src/lib/tasks/persona.ts's applyPersonaRole() — the shared atomic
-  // persona-swap helper used by the one-time 2026-09-08 staff backfill now,
-  // and by Increment 3's setPersonaRole server action later.
-  // USER_GLOBAL_ROLE_CHANGED above is left in place, unused going forward
-  // once Increment 3 retires the admin-users globalRole dropdown — existing
-  // rows stay for history.
-  USER_PERSONA_ROLE_CHANGED: "user.persona_role_changed",
+  // Device auth (module `mobile`, 2026-09-11-phase-4-mobile).
+  // DEVICE_REGISTERED is written from src/app/api/devices/route.ts — a route
+  // handler, not an actions.ts file, so check:audit will not see it (same
+  // documented precedent as RATE_LIMIT_BLOCKED). Registration is the
+  // credential-minting event, so it is audited despite living in a route.
+  // DEVICE_REVOKED / DEVICE_PAIRING_CODE_CREATED are written from
+  // src/app/(account)/account/devices/actions.ts (and the platform Admin's
+  // devices actions for operator revokes), which check:audit does scan.
+  // Heartbeats and push-token refreshes are deliberately NOT audited:
+  // high-frequency, no privilege change.
+  DEVICE_REGISTERED: "device.registered",
+  DEVICE_REVOKED: "device.revoked",
+  DEVICE_PAIRING_CODE_CREATED: "device.pairing_code_created",
 } as const;
 
 export type AuditAction = (typeof AUDIT_ACTIONS)[keyof typeof AUDIT_ACTIONS];

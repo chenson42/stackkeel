@@ -28,6 +28,9 @@ export async function proxy(req: NextRequest) {
 
   if (pathname.startsWith("/api/")) return NextResponse.next();
   if (pathname.startsWith("/account/verify-email/")) return NextResponse.next();
+  // Universal Links / App Links verifiers (Apple CDN, Google) fetch these
+  // anonymously; they must never bounce to /signin (module `mobile`).
+  if (pathname.startsWith("/.well-known/")) return NextResponse.next();
   if (PUBLIC_PATHS.has(pathname)) return NextResponse.next();
 
   const session = await edgeAuth();

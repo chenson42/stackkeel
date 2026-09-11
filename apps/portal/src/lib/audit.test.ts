@@ -103,37 +103,10 @@ const EXPECTED_ENTRIES: Record<keyof typeof AUDIT_ACTIONS, string> = {
   WHATS_NEW_ENTRY_CREATED: "whats_new.entry_created",
   WHATS_NEW_ENTRY_UPDATED: "whats_new.entry_updated",
   WHATS_NEW_ENTRY_DELETED: "whats_new.entry_deleted",
-  // Task management (task-mgmt-1a-inc1-roles-projects, DECISION-030/031)
-  PROJECT_CREATED: "project.created",
-  PROJECT_ARCHIVED: "project.archived",
-  PROJECT_DELETED: "project.deleted",
-  PROJECT_MEMBER_ADDED: "project.member_added",
-  PROJECT_MEMBER_REMOVED: "project.member_removed",
-  // Child B (2026-08-26-gap-closure-B-soft-delete, DECISION-036/037) —
-  // written from src/app/(member)/projects/actions.ts.
-  PROJECT_RESTORED: "project.restored",
-  PROJECT_UNARCHIVED: "project.unarchived",
-  USER_GLOBAL_ROLE_CHANGED: "user.global_role_changed",
-  // Task management (task-mgmt-1a-inc2-tasks-todos) — written from
-  // src/app/(member)/tasks/actions.ts's moveTask
-  TASK_MOVED: "task.moved",
-  TASK_UNSHARED_TO_PERSONAL: "task.unshared_to_personal",
-  // Task management (task-mgmt-1a-inc3-labels, DECISION-033) — written from
-  // src/app/(member)/tasks/label-actions.ts (LABEL_CREATED) and
-  // src/app/(admin)/admin/labels/actions.ts (the rest).
-  LABEL_CREATED: "label.created",
-  LABEL_DEACTIVATED: "label.deactivated",
-  LABEL_REACTIVATED: "label.reactivated",
-  LABEL_DELETED: "label.deleted",
-  LABEL_MERGED: "label.merged",
-  // Gap Closure Child E (2026-08-26-gap-closure-e-admin-verification,
-  // FR-PERM-09) — written from setCanCreateProjectsOverride in
-  // src/app/(admin)/admin/users/[id]/actions.ts.
-  USER_PROJECT_CREATE_OVERRIDE_GRANTED: "user.project_create_override.granted",
-  USER_PROJECT_CREATE_OVERRIDE_REVOKED: "user.project_create_override.revoked",
-  // task-auth-onto-roles (DECISION-017), Increment 2 — written from
-  // src/lib/tasks/persona.ts's applyPersonaRole().
-  USER_PERSONA_ROLE_CHANGED: "user.persona_role_changed",
+  // Device auth (module `mobile`, 2026-09-11-phase-4-mobile)
+  DEVICE_REGISTERED: "device.registered",
+  DEVICE_REVOKED: "device.revoked",
+  DEVICE_PAIRING_CODE_CREATED: "device.pairing_code_created",
 };
 
 const EXPECTED_COUNT = Object.keys(EXPECTED_ENTRIES).length;

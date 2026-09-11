@@ -94,6 +94,9 @@ const EXPECTED_ENTRIES: Record<keyof typeof AUDIT_ACTIONS, string> = {
   TICKET_PRIORITY_CHANGED: "ticket.priority_changed",
   FEEDBACK_PROMOTED_TO_TICKET: "feedback.promoted_to_ticket",
   BRANDING_UPDATED: "branding.updated",
+  // Device auth (module `mobile`, 2026-09-11-phase-4-mobile)
+  DEVICE_REVOKED: "device.revoked",
+  APP_RELEASE_POLICY_UPDATED: "app_release.policy_updated",
 };
 
 const EXPECTED_COUNT = Object.keys(EXPECTED_ENTRIES).length;
