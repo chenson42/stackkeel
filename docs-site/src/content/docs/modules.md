@@ -1,6 +1,6 @@
 ---
 title: Module Catalog — Apps and Features You Can Keep or Strip
-description: "Every optional Stackkeel module: the admin panel, Capacitor shell, Expo app, docs site, helpdesk, feedback, 2FA, OIDC, email queue, announcements, and admin viewers, each removable cleanly during personalization."
+description: "Every optional Stackkeel module: the admin panel, Capacitor shell, Expo app, docs site, helpdesk, feedback, 2FA, OIDC, email queue, announcements, and admin viewers, each removable during personalization. Most strip fully; 2FA and OIDC strip to dormant."
 ---
 
 Modules are the unit of personalization. Each is registered in `scripts/kit/module-registry.json` with everything needed to remove it cleanly: paths, workspace entries, dependencies, `-- MODULE:`-tagged migrations, flag seeds, feature keys, env vars, and doc anchors.
@@ -21,8 +21,8 @@ Modules are the unit of personalization. Each is registered in `scripts/kit/modu
 |---|---|---|
 | `helpdesk` | on | Tickets, threaded messages, action timeline, admin triage queue, feedback promotion |
 | `feedback` | on | In-app feedback form, daily prompt card, admin triage |
-| `twoFactor` | on | TOTP enrollment, recovery codes, trusted devices, per-user enforcement |
-| `oidc` | on | Generic OIDC provider slot (Okta/Entra/Auth0 via env vars) |
+| `twoFactor` | on | TOTP enrollment, recovery codes, trusted devices, per-user enforcement. Strips *keep-dormant*: the UI and enrollment flows are removed, the underlying auth plumbing stays inert |
+| `oidc` | on | Generic OIDC provider slot (Okta/Entra/Auth0 via env vars). Strips *keep-dormant*, same as `twoFactor` |
 | `emailQueue` | on | Queued sending with retry/backoff, admin viewer, delivery webhooks |
 | `whatsNew` | on | Release announcements with seen-tracking |
 | `flagsAdmin` | on | The flags admin UI (flag *infrastructure* is core and not removable) |

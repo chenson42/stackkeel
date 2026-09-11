@@ -15,7 +15,9 @@ repository, not to any tool reading it.
 
 **1. One instruction file: AGENTS.md.** The [AGENTS.md standard](https://agents.md)
 is read natively by GitHub Copilot, Cursor, Codex CLI, Gemini CLI, Zed, and dozens of
-other tools. Stackkeel's root `AGENTS.md` carries everything: the architecture, the
+other tools. Stackkeel's root
+[`AGENTS.md`](https://github.com/chenson42/stackkeel/blob/main/AGENTS.md) carries
+everything: the architecture, the
 invariants, the six-phase pipeline, commit grammar, and workflow rules. `CLAUDE.md`
 is a one-line pointer to it. Per-app shims add only local details like ports and
 commands.
