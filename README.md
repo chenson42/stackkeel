@@ -27,8 +27,8 @@ Gemini CLI, or any assistant that reads [AGENTS.md](https://agents.md) and
    anti-lockout guarantees, an audit log with CI-enforced coverage, feature flags, a
    retrying email queue, a real support-ticket system, runtime theming with WCAG
    contrast guarantees, and device-token mobile auth are already built and tested.
-2. **The AI workflow lives in the repository.** A six-phase pipeline (analyst →
-   architect → tech lead → implementer → QA) with work logs, evidence discipline,
+2. **The AI workflow lives in the repository.** A structured six-phase development
+   pipeline with work logs, evidence discipline,
    and gates enforced by git hooks and CI, not by any one assistant's goodwill.
 3. **No model lock-in.** Instructions in `AGENTS.md`, procedures as Agent Skills,
    enforcement in git + CI. Use Claude today and Codex tomorrow; the project treats
@@ -79,7 +79,7 @@ unconfigured.
 
 v0.1, September 2026. New, and built end-to-end by the workflow it ships: every
 feature went through the six-phase pipeline, and the release was verified with
-~1,200 unit tests plus Playwright smoke suites against a live Postgres.
+more than 1,000 unit tests plus Playwright smoke suites against a live Postgres.
 
 MIT licensed. Contributions arrive as
 [contribution-kit specs](https://stackkeel.org/sync/) via PR.
