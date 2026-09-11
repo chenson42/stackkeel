@@ -38,7 +38,7 @@ import { computeLocalDate } from "./date-utils";
  */
 const ADMIN_FEEDBACK_URL = new URL(
   "/feedback",
-  process.env.NEXT_PUBLIC_ADMIN_URL || "http://localhost:3002/users",
+  process.env.NEXT_PUBLIC_ADMIN_URL || "http://localhost:3001/users",
 ).href;
 
 /**

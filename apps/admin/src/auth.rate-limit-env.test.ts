@@ -124,7 +124,7 @@ describe("apps/admin/src/auth.ts — RATE_LIMIT_LOGIN_MAX / RATE_LIMIT_LOGIN_WIN
     });
     checkRateLimitMock.mockClear();
 
-    await authorize({ email: "someone@platform.test", password: "whatever" });
+    await authorize({ email: "someone@platform.invalid", password: "whatever" });
 
     expect(checkRateLimitMock).toHaveBeenCalledTimes(1);
     const [, limit] = checkRateLimitMock.mock.calls[0]!;
@@ -138,7 +138,7 @@ describe("apps/admin/src/auth.ts — RATE_LIMIT_LOGIN_MAX / RATE_LIMIT_LOGIN_WIN
     });
     checkRateLimitMock.mockClear();
 
-    await authorize({ email: "someone@platform.test", password: "whatever" });
+    await authorize({ email: "someone@platform.invalid", password: "whatever" });
 
     expect(checkRateLimitMock).toHaveBeenCalledTimes(1);
     const [, limit] = checkRateLimitMock.mock.calls[0]!;

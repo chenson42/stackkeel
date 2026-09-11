@@ -7,7 +7,7 @@ import { baseIgnores } from "@repo/config/eslint-base.mjs";
 const config = [
   ...nextConfig,
   {
-    // baseIgnores is the subset shared with apps/npvitals — see
+    // baseIgnores is the subset shared with the sibling apps — see
     // packages/config/eslint-base.mjs.
     ignores: [
       ...baseIgnores,

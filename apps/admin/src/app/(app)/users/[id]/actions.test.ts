@@ -262,7 +262,7 @@ describe("resetMfaAction", () => {
   });
 
   it("deletes both userTotp and userTotpRecoveryCodes rows in ONE db.batch() call, and audits ADMIN_MFA_RESET", async () => {
-    usersFindFirst.mockResolvedValue({ id: TARGET, email: "target@test.com" });
+    usersFindFirst.mockResolvedValue({ id: TARGET, email: "target@example.com" });
 
     const res = await resetMfaAction({ targetUserId: TARGET });
 
@@ -276,7 +276,7 @@ describe("resetMfaAction", () => {
     const [arg] = recordAudit.mock.calls[0] as [Record<string, unknown>];
     expect(arg.action).toBe("admin.mfa.reset");
     expect(arg.resourceId).toBe(TARGET);
-    expect((arg.metadata as Record<string, unknown>).targetEmail).toBe("target@test.com");
+    expect((arg.metadata as Record<string, unknown>).targetEmail).toBe("target@example.com");
   });
 
   it("returns Forbidden and touches nothing when the caller lacks ADMIN_USERS", async () => {
@@ -302,7 +302,7 @@ describe("resetMfaAction", () => {
   });
 
   it("ALLOWS self-target (no block) — deliberate ruling, see this file's own resetMfaAction header — and audits selfTarget: true", async () => {
-    usersFindFirst.mockResolvedValue({ id: SELF, email: "self@test.com" });
+    usersFindFirst.mockResolvedValue({ id: SELF, email: "self@example.com" });
 
     const res = await resetMfaAction({ targetUserId: SELF });
 
@@ -313,7 +313,7 @@ describe("resetMfaAction", () => {
   });
 
   it("audits selfTarget: false when targeting someone else", async () => {
-    usersFindFirst.mockResolvedValue({ id: TARGET, email: "target@test.com" });
+    usersFindFirst.mockResolvedValue({ id: TARGET, email: "target@example.com" });
 
     await resetMfaAction({ targetUserId: TARGET });
 

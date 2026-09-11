@@ -43,7 +43,7 @@ export async function mintAndSendInvite(input: {
       set: { token: tokenHash, expiresAt, createdAt: new Date() },
     });
 
-  const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3002";
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3001";
   const setPasswordUrl = `${baseUrl}/set-password?token=${rawToken}`;
   // recipientName is admin-supplied (createUserAction's optional `name`
   // field) — user-controlled text, HTML-escaped before interpolation per

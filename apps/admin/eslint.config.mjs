@@ -1,4 +1,4 @@
-// Flat ESLint config for Kindway Admin (apps/admin). Mirrors
+// Flat ESLint config for apps/admin. Mirrors
 // apps/portal/eslint.config.mjs exactly — Next.js's bundled flat config
 // (next, react, react-hooks, typescript, jsx-a11y, import) plus the
 // project-wide ignores/rules shared across this monorepo's apps.
@@ -8,7 +8,7 @@ import { baseIgnores } from "@repo/config/eslint-base.mjs";
 const config = [
   ...nextConfig,
   {
-    // baseIgnores is the subset shared with apps/npvitals/apps/portal — see
+    // baseIgnores is the subset shared with the sibling apps — see
     // packages/config/eslint-base.mjs.
     ignores: [
       ...baseIgnores,
