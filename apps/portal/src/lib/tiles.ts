@@ -19,6 +19,7 @@ export interface PortalTile {
 }
 
 export const PORTAL_TILES: PortalTile[] = [
+  // kit-module:whats-new-begin
   {
     id: "whats-new",
     label: "What's new",
@@ -27,6 +28,8 @@ export const PORTAL_TILES: PortalTile[] = [
     requiredFeature: null,
     order: 10,
   },
+  // kit-module:whats-new-end
+  // kit-module:feedback-begin
   {
     id: "feedback",
     label: "Feedback",
@@ -35,6 +38,8 @@ export const PORTAL_TILES: PortalTile[] = [
     requiredFeature: null,
     order: 20,
   },
+  // kit-module:feedback-end
+  // kit-module:helpdesk-begin
   {
     id: "support",
     label: "Support",
@@ -45,6 +50,7 @@ export const PORTAL_TILES: PortalTile[] = [
     requiredFeature: "tickets.file",
     order: 30,
   },
+  // kit-module:helpdesk-end
   {
     id: "account",
     label: "Account",

@@ -6,7 +6,9 @@ import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { FEATURES, hasFeature } from "@repo/permissions";
 import { FeedbackStatusControl } from "./feedback-status-control";
+// kit-module:helpdesk-begin
 import { PromoteToTicketButton } from "./promote-to-ticket-button";
+// kit-module:helpdesk-end
 
 // Cross-app feedback triage viewer (Increment 6, step 6a —
 // apps/portal/docs/work-log/2026-09-06-feedback-admin-triage.md). Modeled
@@ -95,9 +97,11 @@ export default async function FeedbackPage({
   if (!session?.user || !hasFeature(session.user.features, FEATURES.ADMIN_FEEDBACK)) {
     redirect("/access-pending");
   }
+  // kit-module:helpdesk-begin
   // Promotion CREATES a ticket, so the control needs admin.tickets on top
   // of admin.feedback — the server action enforces the same split.
   const canTickets = hasFeature(session.user.features, FEATURES.ADMIN_TICKETS);
+  // kit-module:helpdesk-end
 
   const sp = await searchParams;
   const currentApp = isValid(APPS, sp.app) ? sp.app : "all";
@@ -236,6 +240,7 @@ export default async function FeedbackPage({
                           {STATUS_LABELS[row.status] ?? row.status}
                         </span>
                         <FeedbackStatusControl feedbackId={row.id} currentStatus={row.status} />
+                        {/* kit-module:helpdesk-begin */}
                         {canTickets &&
                           !row.promotedToTicketId &&
                           (row.status === "new" || row.status === "triaged") && (
@@ -249,6 +254,7 @@ export default async function FeedbackPage({
                             View ticket
                           </Link>
                         )}
+                        {/* kit-module:helpdesk-end */}
                       </div>
                     </td>
                   </tr>

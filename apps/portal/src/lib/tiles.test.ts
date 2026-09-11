@@ -4,7 +4,12 @@ import { PORTAL_TILES, visiblePortalTiles } from "./tiles";
 describe("visiblePortalTiles", () => {
   it("returns all no-feature tiles for a plain member", () => {
     const tiles = visiblePortalTiles([]);
-    expect(tiles.map((t) => t.id)).toEqual(["whats-new", "feedback", "account"]);
+    // Registry-derived rather than a hardcoded id list so the assertion stays
+    // correct when personalization strips a tile's module.
+    expect(tiles.map((t) => t.id)).toEqual(
+      PORTAL_TILES.filter((t) => t.requiredFeature === null).map((t) => t.id),
+    );
+    expect(tiles.map((t) => t.id)).toContain("account");
   });
 
   it("handles undefined features (fail-closed for gated tiles, open for ungated)", () => {

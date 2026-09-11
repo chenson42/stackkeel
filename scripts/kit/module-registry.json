@@ -1,0 +1,350 @@
+{
+  "$comment": "Authoritative strip registry for personalization. Each module declares everything strip-module.mjs needs to remove it: whole paths to delete, migration files (only ones headed -- MODULE: <this module>), seam fences (kit-module:<name>-begin/-end comment pairs in shared files), exact-string replacements for JSX-structural seams, env fences, doc anchors (## headings to drop from prose files), and metadata the personalize skill reads. `strategy` gradations: file-strip (default) | page-strip | keep-dormant. `schemaStrategy: leave-in-place` = the module's tables/columns live in core migrations and are never dropped. `auto.whenAllStripped` = strip this module automatically only when every listed module was stripped.",
+  "modules": {
+    "admin": {
+      "kind": "app",
+      "label": "Admin control plane app",
+      "operatingCost": "A second deployed Next.js app (own hosting target + env). Without it there is no UI for users/roles/flags/audit/triage.",
+      "paths": ["apps/admin/"],
+      "workspacePackages": ["admin"],
+      "packageJsonEdits": [],
+      "migrations": [],
+      "schemaStrategy": "leave-in-place",
+      "flagSeeds": [],
+      "featureKeys": [],
+      "envVars": ["NEXT_PUBLIC_ADMIN_URL"],
+      "fencedFiles": [
+        "apps/portal/src/lib/app-switcher.ts",
+        "apps/portal/.env.example"
+      ],
+      "replacements": [],
+      "docAnchors": [
+        { "file": "README.md", "match": "apps/admin" },
+        { "file": "AGENTS.md", "match": "apps/admin" }
+      ],
+      "warnings": [
+        "Stripping admin removes the ONLY UI for user/role/flag/audit/ticket administration. Keep it unless this fork administers users some other way.",
+        "app-switcher tests reference the admin tile; apps/portal/src/lib/app-switcher.test.ts is deleted by this strip.",
+        "Doc anchors are advisory: prose mentions of apps/admin in README/AGENTS.md need a manual pass."
+      ],
+      "extraDeletePaths": ["apps/portal/src/lib/app-switcher.test.ts"]
+    },
+    "shell": {
+      "kind": "app",
+      "label": "Capacitor native wrapper (iOS + Android)",
+      "operatingCost": "Apple + Google developer accounts, store review cycles, native build tooling (Xcode / Android SDK).",
+      "paths": ["apps/shell/"],
+      "workspacePackages": ["shell"],
+      "packageJsonEdits": [],
+      "migrations": [],
+      "schemaStrategy": "leave-in-place",
+      "flagSeeds": [],
+      "featureKeys": [],
+      "envVars": [],
+      "fencedFiles": [],
+      "replacements": [],
+      "docAnchors": [{ "file": "README.md", "match": "apps/shell" }],
+      "warnings": []
+    },
+    "mobile": {
+      "kind": "app",
+      "label": "Expo native app",
+      "operatingCost": "EAS + store accounts, native release management, a second client codebase to maintain.",
+      "paths": ["apps/mobile/"],
+      "workspacePackages": ["mobile"],
+      "packageJsonEdits": [
+        { "file": "package.json", "removeFromPnpmOverrides": [] }
+      ],
+      "migrations": [],
+      "schemaStrategy": "leave-in-place",
+      "flagSeeds": [],
+      "featureKeys": [],
+      "envVars": [],
+      "fencedFiles": [],
+      "replacements": [],
+      "docAnchors": [{ "file": "README.md", "match": "apps/mobile" }],
+      "warnings": []
+    },
+    "docs-site": {
+      "kind": "app",
+      "label": "Documentation site (GitHub Pages)",
+      "operatingCost": "GitHub Pages enablement + keeping docs current; near-zero runtime cost.",
+      "paths": ["docs-site/", ".github/workflows/docs.yml"],
+      "workspacePackages": ["docs-site"],
+      "packageJsonEdits": [],
+      "workspaceGlobRemovals": ["docs-site"],
+      "migrations": [],
+      "schemaStrategy": "leave-in-place",
+      "flagSeeds": [],
+      "featureKeys": [],
+      "envVars": [],
+      "fencedFiles": [],
+      "replacements": [],
+      "docAnchors": [{ "file": "README.md", "match": "docs-site" }],
+      "warnings": []
+    },
+    "device-auth": {
+      "kind": "auto",
+      "label": "Device tokens, pairing, release gating (server + web bridge)",
+      "auto": { "whenAllStripped": ["shell", "mobile"] },
+      "paths": [
+        "apps/portal/src/app/api/devices/",
+        "apps/portal/src/app/api/app-release/",
+        "apps/portal/src/app/(account)/account/devices/",
+        "apps/portal/src/components/mobile/",
+        "apps/portal/src/lib/mobile/",
+        "apps/portal/src/app/.well-known/",
+        "apps/admin/src/app/(app)/devices/",
+        "apps/admin/src/app/(app)/app-release/",
+        "packages/db/src/devices.ts",
+        "packages/db/src/devices.test.ts",
+        "packages/db/src/schema/devices.ts"
+      ],
+      "workspacePackages": [],
+      "packageJsonEdits": [],
+      "migrations": ["packages/db/migrations/0008_devices.sql"],
+      "schemaStrategy": "drop-with-module-migration",
+      "flagSeeds": ["mobile.update_check"],
+      "featureKeys": ["admin.devices"],
+      "envVars": [],
+      "fencedFiles": [
+        "packages/db/src/index.ts",
+        "packages/db/src/schema/index.ts",
+        "apps/portal/src/proxy.ts",
+        "apps/portal/src/app/(member)/layout.tsx",
+        "apps/portal/src/lib/audit.ts",
+        "apps/portal/src/lib/audit.test.ts",
+        "apps/admin/src/lib/audit.ts",
+        "apps/admin/src/lib/audit.test.ts",
+        "apps/admin/src/app/(app)/app-sidebar-nav.tsx",
+        "apps/portal/.env.example"
+      ],
+      "replacements": [
+        {
+          "file": "apps/portal/src/app/(member)/layout.tsx",
+          "find": "  return (\n    <AppVersionProvider updateCheckEnabled={updateCheckEnabled}>\n      <MobileDeviceRegistrar />\n      <MobileDeepLinkHandler />\n      <ScrollGuard />\n      <AppVersionGate />\n      <GlobalNav session={session}>{children}</GlobalNav>\n    </AppVersionProvider>\n  );",
+          "replaceWith": "  return <GlobalNav session={session}>{children}</GlobalNav>;"
+        }
+      ],
+      "docAnchors": [],
+      "warnings": [
+        "Stripped automatically only when BOTH shell and mobile are stripped — the Capacitor shell still needs device registration and the version gate."
+      ]
+    },
+    "helpdesk": {
+      "kind": "feature",
+      "label": "Support tickets (helpdesk)",
+      "paths": [
+        "apps/portal/src/app/(member)/support/",
+        "apps/portal/src/lib/tickets-labels.ts",
+        "apps/portal/src/lib/tickets-labels.test.ts",
+        "apps/portal/src/lib/tickets-notifications.ts",
+        "apps/admin/src/app/(app)/tickets/",
+        "apps/admin/src/app/(app)/feedback/promote-to-ticket-button.tsx",
+        "apps/admin/src/lib/tickets-labels.ts",
+        "apps/admin/src/lib/tickets-labels.test.ts",
+        "apps/admin/src/lib/tickets-notifications.ts",
+        "packages/db/src/tickets.ts",
+        "packages/db/src/tickets.test.ts",
+        "packages/db/src/schema/support.ts"
+      ],
+      "workspacePackages": [],
+      "packageJsonEdits": [],
+      "migrations": ["packages/db/migrations/0006_helpdesk.sql"],
+      "schemaStrategy": "drop-with-module-migration",
+      "flagSeeds": [],
+      "featureKeys": ["tickets.file", "admin.tickets"],
+      "envVars": [],
+      "fencedFiles": [
+        "packages/db/src/index.ts",
+        "packages/db/src/schema/index.ts",
+        "packages/db/src/schema/platform.ts",
+        "packages/db/src/feedback.ts",
+        "apps/portal/src/proxy.ts",
+        "apps/portal/src/lib/tiles.ts",
+        "apps/portal/src/lib/audit.ts",
+        "apps/portal/src/lib/audit.test.ts",
+        "apps/admin/src/lib/audit.ts",
+        "apps/admin/src/lib/audit.test.ts",
+        "apps/admin/src/app/(app)/app-sidebar-nav.tsx",
+        "apps/admin/src/app/(app)/feedback/page.tsx"
+      ],
+      "replacements": [],
+      "docAnchors": [
+        { "file": "AGENTS.md", "match": "helpdesk" },
+        { "file": "README.md", "match": "helpdesk" }
+      ],
+      "warnings": [
+        "Feature keys tickets.file/admin.tickets remain in the permissions catalog (core) — unused keys are harmless; remove manually if you want a spotless catalog.",
+        "apps/admin/src/app/(app)/feedback/actions.test.ts may reference promotion — if tests fail post-strip, delete the promotion describe block."
+      ]
+    },
+    "feedback": {
+      "kind": "feature",
+      "label": "In-app user feedback",
+      "paths": [
+        "apps/portal/src/app/(member)/feedback/",
+        "apps/portal/src/app/(member)/home/feedback-prompt-card.tsx",
+        "apps/portal/src/app/(account)/account/feedback-opt-out-toggle.tsx",
+        "apps/admin/src/app/(app)/feedback/",
+        "packages/db/src/feedback.ts",
+        "packages/db/src/feedback.test.ts",
+        ".claude/skills/process-feedback/"
+      ],
+      "workspacePackages": [],
+      "packageJsonEdits": [],
+      "migrations": ["packages/db/migrations/0003_feedback.sql"],
+      "schemaStrategy": "drop-with-module-migration",
+      "flagSeeds": [],
+      "featureKeys": ["admin.feedback"],
+      "envVars": [],
+      "fencedFiles": [
+        "packages/db/src/index.ts",
+        "apps/portal/src/lib/tiles.ts",
+        "apps/admin/src/lib/audit.ts",
+        "apps/admin/src/lib/audit.test.ts",
+        "apps/admin/src/app/(app)/app-sidebar-nav.tsx"
+      ],
+      "replacements": [],
+      "docAnchors": [
+        { "file": "AGENTS.md", "match": "feedback" },
+        { "file": "README.md", "match": "feedback" }
+      ],
+      "seamsPending": [
+        "portal home page's prompt-card mount and account page's opt-out toggle usage are not yet fenced — after strip, remove the dangling imports the typecheck reports (expected: 2 files).",
+        "feedback tables in packages/db/src/schema/platform.ts are left in place (only the drizzle helpers are removed)."
+      ],
+      "warnings": [
+        "Feedback is the helpdesk's promotion on-ramp: stripping feedback while keeping helpdesk keeps direct ticket filing but removes promotion (the promote button lives in the feedback pages)."
+      ]
+    },
+    "whatsNew": {
+      "kind": "feature",
+      "label": "What's-new announcements",
+      "paths": [
+        "apps/portal/src/app/(member)/whats-new/",
+        "apps/admin/src/app/(app)/whats-new/"
+      ],
+      "workspacePackages": [],
+      "packageJsonEdits": [],
+      "migrations": ["packages/db/migrations/0004_whats-new.sql"],
+      "schemaStrategy": "drop-with-module-migration",
+      "flagSeeds": [],
+      "featureKeys": ["admin.whats_new"],
+      "envVars": [],
+      "fencedFiles": [
+        "apps/portal/src/lib/tiles.ts",
+        "apps/portal/src/lib/audit.ts",
+        "apps/portal/src/lib/audit.test.ts",
+        "apps/admin/src/lib/audit.ts",
+        "apps/admin/src/lib/audit.test.ts",
+        "apps/admin/src/app/(app)/app-sidebar-nav.tsx"
+      ],
+      "replacements": [],
+      "docAnchors": [{ "file": "README.md", "match": "What's New" }],
+      "seamsPending": [
+        "whats_new_entries table definition in packages/db/src/schema/platform.ts and any home-page unseen-entries card are not yet fenced — follow the post-strip typecheck (expected: ≤2 files)."
+      ],
+      "warnings": []
+    },
+    "twoFactor": {
+      "kind": "feature",
+      "label": "TOTP two-factor authentication",
+      "strategy": "keep-dormant",
+      "paths": [],
+      "workspacePackages": [],
+      "packageJsonEdits": [],
+      "migrations": [],
+      "schemaStrategy": "leave-in-place",
+      "flagSeeds": [],
+      "featureKeys": [],
+      "envVars": ["AUTH_TOTP_ENCRYPTION_KEY"],
+      "fencedFiles": [],
+      "replacements": [],
+      "docAnchors": [],
+      "warnings": [
+        "2FA is woven through packages/auth, both proxies, and the admin sign-in; v1 does not file-strip it. Deselecting it records the choice in kit.json and leaves the code dormant: enforcement is per-user (twoFactorRequired defaults off) and no one is forced to enroll. A full file-strip is a filed TODO."
+      ]
+    },
+    "oidc": {
+      "kind": "feature",
+      "label": "Generic OIDC sign-in provider",
+      "strategy": "keep-dormant",
+      "paths": [],
+      "workspacePackages": [],
+      "packageJsonEdits": [],
+      "migrations": [],
+      "schemaStrategy": "leave-in-place",
+      "flagSeeds": [],
+      "featureKeys": [],
+      "envVars": ["AUTH_OIDC_ISSUER", "AUTH_OIDC_ID", "AUTH_OIDC_SECRET", "AUTH_OIDC_NAME"],
+      "fencedFiles": [],
+      "replacements": [],
+      "docAnchors": [],
+      "warnings": [
+        "OIDC activates only when AUTH_OIDC_* env vars are set; with them unset the provider list omits it entirely. Deselecting records the choice and removes the env inventory lines — the code (packages/auth/src/oidc.ts) stays dormant."
+      ]
+    },
+    "emailQueue": {
+      "kind": "feature",
+      "label": "Queued email admin viewer",
+      "strategy": "page-strip",
+      "paths": ["apps/admin/src/app/(app)/email-queue/"],
+      "workspacePackages": [],
+      "packageJsonEdits": [],
+      "migrations": [],
+      "schemaStrategy": "leave-in-place",
+      "flagSeeds": [],
+      "featureKeys": ["admin.email_queue"],
+      "envVars": [],
+      "fencedFiles": ["apps/admin/src/app/(app)/app-sidebar-nav.tsx"],
+      "replacements": [],
+      "docAnchors": [],
+      "warnings": [
+        "Only the admin viewer is stripped. The queue itself (email_queue table, enqueueEmail, the processor cron) is core — Invariant 12 says all email flows through it."
+      ]
+    },
+    "flagsAdmin": {
+      "kind": "feature",
+      "label": "Feature-flags admin UI",
+      "strategy": "page-strip",
+      "paths": ["apps/admin/src/app/(app)/flags/"],
+      "workspacePackages": [],
+      "packageJsonEdits": [],
+      "migrations": [],
+      "schemaStrategy": "leave-in-place",
+      "flagSeeds": [],
+      "featureKeys": ["admin.flags"],
+      "envVars": [],
+      "fencedFiles": [
+        "apps/admin/src/lib/audit.ts",
+        "apps/admin/src/lib/audit.test.ts",
+        "apps/admin/src/app/(app)/app-sidebar-nav.tsx"
+      ],
+      "replacements": [],
+      "docAnchors": [],
+      "warnings": [
+        "Flag infrastructure stays (core); without this page, flags are toggled with SQL or a fork-built surface."
+      ]
+    },
+    "auditViewer": {
+      "kind": "feature",
+      "label": "Audit-log admin viewer",
+      "strategy": "page-strip",
+      "paths": ["apps/admin/src/app/(app)/audit/"],
+      "workspacePackages": [],
+      "packageJsonEdits": [],
+      "migrations": [],
+      "schemaStrategy": "leave-in-place",
+      "flagSeeds": [],
+      "featureKeys": ["admin.audit"],
+      "envVars": [],
+      "fencedFiles": ["apps/admin/src/app/(app)/app-sidebar-nav.tsx"],
+      "replacements": [],
+      "docAnchors": [],
+      "warnings": [
+        "Audit WRITES are core and continue; only the viewer goes. Rows remain queryable with SQL."
+      ]
+    }
+  }
+}

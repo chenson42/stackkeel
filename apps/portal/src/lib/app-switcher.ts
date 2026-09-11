@@ -12,10 +12,14 @@ import type { AppSwitcherTile } from "@repo/ui";
 // (admin)/admin/layout.tsx both import this, so the filtering logic exists
 // exactly once in Portal despite Portal being the only app with two header
 // render locations (Phase 3 API/Props Contract).
+// kit-module:admin-begin
 const ADMIN_URL = process.env.NEXT_PUBLIC_ADMIN_URL || "http://localhost:3001";
+// kit-module:admin-end
 
 export function getAppSwitcherTiles(roles: string[] | undefined): AppSwitcherTile[] {
   const tiles: AppSwitcherTile[] = [{ id: "portal", href: "/home", current: true }];
+  // kit-module:admin-begin
   if (hasRoleInApp(roles, "admin")) tiles.push({ id: "admin", href: ADMIN_URL, current: false });
+  // kit-module:admin-end
   return tiles;
 }

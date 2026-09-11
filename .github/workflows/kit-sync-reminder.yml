@@ -1,0 +1,52 @@
+# Fork-only, notification-only: once a month, check whether the canonical kit
+# has commits this fork hasn't reviewed, and keep exactly one open issue saying
+# so. It never diffs, classifies, or applies anything — /upstream-sync (the
+# skill) is the driver; this is the nudge for forks whose sessions don't run
+# the cadence check.
+name: kit-sync-reminder
+
+on:
+  schedule:
+    - cron: "0 9 1 * *"
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  remind:
+    if: github.repository != 'chenson42/stackkeel'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Check canonical for new commits
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          CANONICAL_URL=$(node -p "JSON.parse(require('fs').readFileSync('kit.json','utf8')).kit.canonicalUrl")
+          REPO=${CANONICAL_URL#https://github.com/}
+          LAST_SHA=$(node -p "JSON.parse(require('fs').readFileSync('kit.json','utf8')).sync.upstream.lastSyncedSha || ''")
+          LAST_DATE=$(node -p "JSON.parse(require('fs').readFileSync('kit.json','utf8')).sync.upstream.lastSyncedDate || ''")
+          if [ -z "$LAST_DATE" ]; then
+            echo "No sync baseline yet (run /upstream-sync once) — skipping."
+            exit 0
+          fi
+          COUNT=$(gh api "repos/$REPO/commits?since=${LAST_DATE}T00:00:00Z&sha=main" --paginate --jq 'length' | paste -sd+ - | bc)
+          # The baseline commit itself can appear in the since window.
+          if [ -n "$LAST_SHA" ] && [ "$COUNT" -gt 0 ]; then COUNT=$((COUNT-1)); fi
+          echo "new_commits=$COUNT"
+          if [ "$COUNT" -le 0 ]; then
+            echo "Nothing new upstream."
+            exit 0
+          fi
+          TITLE="Upstream kit sync available ($COUNT commits)"
+          BODY="The canonical kit ($CANONICAL_URL) has ~$COUNT commits since this fork's last sync ($LAST_DATE). Run \`/upstream-sync\` in an assistant session for the classified punch-list. This issue is updated in place by kit-sync-reminder.yml."
+          EXISTING=$(gh issue list --label kit-sync --state open --json number --jq '.[0].number // empty')
+          if [ -n "$EXISTING" ]; then
+            gh issue edit "$EXISTING" --title "$TITLE" --body "$BODY"
+          else
+            gh label create kit-sync --description "Upstream kit sync reminders" --color 1D76DB 2>/dev/null || true
+            gh issue create --title "$TITLE" --body "$BODY" --label kit-sync
+          fi

@@ -1,0 +1,55 @@
+# Applies expand-only migrations + insert-only seeds to the production database
+# on every push to main. Skips cleanly when no DATABASE_URL secret is
+# configured (forks opt in by adding the secret). Runs in parallel with the
+# host's deploy because the migration policy is expand-only: new tables and
+# columns land before or after the code that uses them without breakage.
+name: db-sync
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "packages/db/migrations/**"
+      - "packages/db/src/seed.ts"
+      - ".github/workflows/db-sync.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: db-sync-prod
+  cancel-in-progress: false
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Check for database secret
+        id: gate
+        run: |
+          if [ -n "${{ secrets.DATABASE_URL }}" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "No DATABASE_URL secret — skipping db-sync (add the secret to enable)."
+          fi
+      - uses: pnpm/action-setup@v6
+        if: steps.gate.outputs.enabled == 'true'
+      - uses: actions/setup-node@v7
+        if: steps.gate.outputs.enabled == 'true'
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install
+        if: steps.gate.outputs.enabled == 'true'
+        run: pnpm install --frozen-lockfile --ignore-scripts
+      - name: Migrate
+        if: steps.gate.outputs.enabled == 'true'
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: node packages/db/migrations/migrate.mjs
+      - name: Seed (insert-only)
+        if: steps.gate.outputs.enabled == 'true'
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+          INITIAL_ADMIN_EMAILS: ${{ secrets.INITIAL_ADMIN_EMAILS }}
+        run: pnpm --filter @repo/db db:seed

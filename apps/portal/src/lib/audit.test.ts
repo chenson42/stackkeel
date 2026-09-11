@@ -81,7 +81,9 @@ const EXPECTED_ENTRIES: Record<keyof typeof AUDIT_ACTIONS, string> = {
   USER_PASSWORD_RESET_REQUESTED: "user.password_reset_requested",
   USER_PASSWORD_RESET_COMPLETED: "user.password_reset_completed",
   // TOTP verification attempts (src/app/(auth)/totp/actions.ts)
+  // kit-module:helpdesk-begin
   TICKET_FILED: "ticket.filed",
+  // kit-module:helpdesk-end
   TOTP_VERIFY_FAILED: "totp.verify_failed",
   TOTP_VERIFY_SUCCEEDED: "totp.verify_succeeded",
   TOTP_RECOVERY_FAILED: "totp.recovery_failed",
@@ -100,13 +102,17 @@ const EXPECTED_ENTRIES: Record<keyof typeof AUDIT_ACTIONS, string> = {
   // Admin-initiated account unlock — written from src/app/(admin)/admin/users/actions.ts
   USER_ACCOUNT_UNLOCKED: "user.account_unlocked",
   // What's-new entries — written from src/app/(admin)/admin/whats-new/actions.ts
+  // kit-module:whats-new-begin
   WHATS_NEW_ENTRY_CREATED: "whats_new.entry_created",
   WHATS_NEW_ENTRY_UPDATED: "whats_new.entry_updated",
   WHATS_NEW_ENTRY_DELETED: "whats_new.entry_deleted",
+  // kit-module:whats-new-end
   // Device auth (module `mobile`, 2026-09-11-phase-4-mobile)
+  // kit-module:device-auth-begin
   DEVICE_REGISTERED: "device.registered",
   DEVICE_REVOKED: "device.revoked",
   DEVICE_PAIRING_CODE_CREATED: "device.pairing_code_created",
+  // kit-module:device-auth-end
 };
 
 const EXPECTED_COUNT = Object.keys(EXPECTED_ENTRIES).length;

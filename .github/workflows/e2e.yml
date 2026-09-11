@@ -1,0 +1,75 @@
+# End-to-end tests against an ephemeral Neon branch. Doubly gated so the kit
+# and secretless forks skip cleanly: requires (a) a NEON_API_KEY secret and
+# (b) Playwright suites to exist (apps/*/e2e/). Playwright suites land with
+# the Phase 7 verification work (docs/TODO.md) — this workflow ships first so
+# forks that add suites get CI e2e for free.
+name: e2e
+
+on:
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - name: Gate — secrets and suites present?
+        id: gate
+        run: |
+          HAS_SUITES=false
+          ls -d apps/*/e2e 2>/dev/null && HAS_SUITES=true
+          if [ -n "${{ secrets.NEON_API_KEY }}" ] && [ "$HAS_SUITES" = "true" ]; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "Skipping e2e (NEON_API_KEY secret present: ${{ secrets.NEON_API_KEY != '' }}; e2e suites present: $HAS_SUITES)."
+          fi
+      - name: Create ephemeral Neon branch
+        if: steps.gate.outputs.enabled == 'true'
+        id: neon
+        uses: neondatabase/create-branch-action@v5
+        with:
+          project_id: ${{ secrets.NEON_PROJECT_ID }}
+          api_key: ${{ secrets.NEON_API_KEY }}
+          branch_name: e2e-${{ github.run_id }}
+      - uses: pnpm/action-setup@v6
+        if: steps.gate.outputs.enabled == 'true'
+      - uses: actions/setup-node@v7
+        if: steps.gate.outputs.enabled == 'true'
+        with:
+          node-version: 22
+          cache: pnpm
+      - name: Install
+        if: steps.gate.outputs.enabled == 'true'
+        run: pnpm install --frozen-lockfile
+      - name: Migrate + seed the ephemeral branch
+        if: steps.gate.outputs.enabled == 'true'
+        env:
+          DATABASE_URL: ${{ steps.neon.outputs.db_url }}
+        run: |
+          node packages/db/migrations/migrate.mjs
+          pnpm --filter @repo/db db:seed
+      - name: Install Playwright browsers
+        if: steps.gate.outputs.enabled == 'true'
+        run: pnpm exec playwright install --with-deps chromium
+      - name: Run e2e suites
+        if: steps.gate.outputs.enabled == 'true'
+        env:
+          DATABASE_URL: ${{ steps.neon.outputs.db_url }}
+          AUTH_SECRET: e2e-secret-do-not-use-in-prod
+          AUTH_TRUST_HOST: "true"
+        run: |
+          for app in apps/*/; do
+            if [ -d "$app/e2e" ]; then
+              pnpm --filter "$(basename "$app")" exec playwright test
+            fi
+          done
+      - name: Delete ephemeral Neon branch
+        if: always() && steps.gate.outputs.enabled == 'true'
+        uses: neondatabase/delete-branch-action@v3
+        with:
+          project_id: ${{ secrets.NEON_PROJECT_ID }}
+          api_key: ${{ secrets.NEON_API_KEY }}
+          branch: e2e-${{ github.run_id }}

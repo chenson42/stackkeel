@@ -70,38 +70,44 @@ export function AppSidebarNav({
   // administration (Directory) or configuration (Platform).
   // Tickets sits with Feedback (module `helpdesk`): both are cross-app
   // content oversight; promotion flows from one queue into the other.
-  if (canAudit || canEmailQueue || canFeedback || canTickets) {
-    groups.push({
-      id: "monitoring",
-      label: "Monitoring",
-      items: [
-        ...(canAudit ? [{ href: "/audit", label: "Audit log", icon: <ShieldCheck /> }] : []),
-        ...(canEmailQueue ? [{ href: "/email-queue", label: "Email queue", icon: <Mail /> }] : []),
-        ...(canFeedback ? [{ href: "/feedback", label: "Feedback", icon: <MessageSquare /> }] : []),
-        ...(canTickets ? [{ href: "/tickets", label: "Tickets", icon: <LifeBuoy /> }] : []),
-      ],
-    });
+  const monitoringItems = [
+    // kit-module:audit-viewer-begin
+    ...(canAudit ? [{ href: "/audit", label: "Audit log", icon: <ShieldCheck /> }] : []),
+    // kit-module:audit-viewer-end
+    // kit-module:email-queue-begin
+    ...(canEmailQueue ? [{ href: "/email-queue", label: "Email queue", icon: <Mail /> }] : []),
+    // kit-module:email-queue-end
+    // kit-module:feedback-begin
+    ...(canFeedback ? [{ href: "/feedback", label: "Feedback", icon: <MessageSquare /> }] : []),
+    // kit-module:feedback-end
+    // kit-module:helpdesk-begin
+    ...(canTickets ? [{ href: "/tickets", label: "Tickets", icon: <LifeBuoy /> }] : []),
+    // kit-module:helpdesk-end
+  ];
+  if (monitoringItems.length > 0) {
+    groups.push({ id: "monitoring", label: "Monitoring", items: monitoringItems });
   }
 
   // "Platform" is this app's first cross-app-configuration group, as
   // distinct from Monitoring (read-only observability) and Directory
   // (identity administration) — 2026-09-05-admin-menu-structure.
-  if (canFlags || canBranding || canDevices) {
-    groups.push({
-      id: "platform",
-      label: "Platform",
-      items: [
-        ...(canFlags ? [{ href: "/flags", label: "Feature flags", icon: <Flag /> }] : []),
-        ...(canBranding ? [{ href: "/branding", label: "Branding", icon: <Palette /> }] : []),
-        // Device fleet + its update policy are one ADMIN_DEVICES privilege
-        // (module `mobile`): configuration of the native surface, so
-        // Platform, not Monitoring.
-        ...(canDevices ? [{ href: "/devices", label: "Devices", icon: <Smartphone /> }] : []),
-        ...(canDevices
-          ? [{ href: "/app-release", label: "App release", icon: <PackageCheck /> }]
-          : []),
-      ],
-    });
+  const platformItems = [
+    // kit-module:flags-admin-begin
+    ...(canFlags ? [{ href: "/flags", label: "Feature flags", icon: <Flag /> }] : []),
+    // kit-module:flags-admin-end
+    ...(canBranding ? [{ href: "/branding", label: "Branding", icon: <Palette /> }] : []),
+    // Device fleet + its update policy are one ADMIN_DEVICES privilege
+    // (module `mobile`): configuration of the native surface, so
+    // Platform, not Monitoring.
+    // kit-module:device-auth-begin
+    ...(canDevices ? [{ href: "/devices", label: "Devices", icon: <Smartphone /> }] : []),
+    ...(canDevices
+      ? [{ href: "/app-release", label: "App release", icon: <PackageCheck /> }]
+      : []),
+    // kit-module:device-auth-end
+  ];
+  if (platformItems.length > 0) {
+    groups.push({ id: "platform", label: "Platform", items: platformItems });
   }
 
   return <AppSidebar groups={groups} />;

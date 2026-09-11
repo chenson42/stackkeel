@@ -37,11 +37,22 @@ Single backlog ledger. Reconcile in the same commit that creates or resolves an 
       `apps/mobile` (Expo + expo-router, secure-store token, pairing, typed
       API client, offline queue), server device auth + `/account/devices` +
       admin `/devices` + `/app-release`. Deferred pieces below.
-- [ ] Phase 5 — Meta-layer: personalize skill + `module-registry.json` +
+- [x] Phase 5 — Meta-layer: personalize skill + `module-registry.json` +
       `strip-module.mjs` + `identity-files.json` + `check-identity-files.mjs`;
-      personalize-gate hook; upstream/downstream-sync skills + `kit-sync-reminder.yml`;
-      `kit:status` full digest + `kit:verify`; e2e workflow (Neon branch) + db-sync +
-      claude-review workflows
+      upstream/downstream-sync skills + `kit-sync-reminder.yml`; e2e (gated) +
+      db-sync workflows — 2026-09-11-phase-5-meta-layer (personalize-gate hook,
+      kit:status/kit:verify, claude-review workflow already landed in Phase 0)
+
+## Phase 5 follow-ups (from the work-log's deviations + NOT-verified)
+
+- [ ] Full file-strip for `twoFactor` and `oidc` (v1 is keep-dormant; registry
+      warnings explain) — 2026-09-11
+- [ ] Fence the pending seams the registry lists for `feedback` and `whatsNew`
+      (prompt-card mount, opt-out toggle, platform.ts table defs) — 2026-09-11
+- [ ] Clone-rehearse the non-rehearsed strips (feedback, whatsNew, shell,
+      docs-site, flagsAdmin, auditViewer) — 2026-09-11
+- [ ] Post-strip `lint` cleanliness (rehearsal gate is typecheck+build; leftover
+      unused `can*` props may warn) — 2026-09-11
 - [ ] Phase 6 — Docs-site: Astro Starlight content + GitHub Pages deploy workflow;
       README expansion
 - [ ] Phase 7 — Dogfood verification: full Playwright e2e; personalize dry-run in a

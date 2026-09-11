@@ -52,7 +52,9 @@ export const AUDIT_ACTIONS = {
   // Helpdesk (module `helpdesk`) — filing is audited (it fans out email to
   // every operator); ordinary thread replies are not (audit-exempt at the
   // call site).
+  // kit-module:helpdesk-begin
   TICKET_FILED: "ticket.filed",
+  // kit-module:helpdesk-end
   // TOTP verification attempts (written from src/app/(auth)/totp/actions.ts)
   TOTP_VERIFY_FAILED: "totp.verify_failed",
   TOTP_VERIFY_SUCCEEDED: "totp.verify_succeeded",
@@ -82,9 +84,11 @@ export const AUDIT_ACTIONS = {
   // The check:audit tripwire scans that file and requires the AUDIT_ACTIONS reference.
   USER_ACCOUNT_UNLOCKED: "user.account_unlocked",
   // What's-new entries — written from src/app/(admin)/admin/whats-new/actions.ts.
+  // kit-module:whats-new-begin
   WHATS_NEW_ENTRY_CREATED: "whats_new.entry_created",
   WHATS_NEW_ENTRY_UPDATED: "whats_new.entry_updated",
   WHATS_NEW_ENTRY_DELETED: "whats_new.entry_deleted",
+  // kit-module:whats-new-end
   // Device auth (module `mobile`, 2026-09-11-phase-4-mobile).
   // DEVICE_REGISTERED is written from src/app/api/devices/route.ts — a route
   // handler, not an actions.ts file, so check:audit will not see it (same
@@ -95,9 +99,11 @@ export const AUDIT_ACTIONS = {
   // devices actions for operator revokes), which check:audit does scan.
   // Heartbeats and push-token refreshes are deliberately NOT audited:
   // high-frequency, no privilege change.
+  // kit-module:device-auth-begin
   DEVICE_REGISTERED: "device.registered",
   DEVICE_REVOKED: "device.revoked",
   DEVICE_PAIRING_CODE_CREATED: "device.pairing_code_created",
+  // kit-module:device-auth-end
 } as const;
 
 export type AuditAction = (typeof AUDIT_ACTIONS)[keyof typeof AUDIT_ACTIONS];

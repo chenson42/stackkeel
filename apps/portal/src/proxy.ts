@@ -19,8 +19,10 @@ const PUBLIC_PATHS = new Set([
 // identical feature key in the tile registry's isVisible — three surfaces,
 // one key, never a second permission vocabulary.
 const PROTECTION_RULES: Array<{ pattern: RegExp; required: string }> = [
+  // kit-module:helpdesk-begin
   // Helpdesk (module `helpdesk`): file/read own support tickets.
   { pattern: /^\/support(\/|$)/, required: "tickets.file" },
+  // kit-module:helpdesk-end
 ];
 
 export async function proxy(req: NextRequest) {
@@ -28,9 +30,11 @@ export async function proxy(req: NextRequest) {
 
   if (pathname.startsWith("/api/")) return NextResponse.next();
   if (pathname.startsWith("/account/verify-email/")) return NextResponse.next();
+  // kit-module:device-auth-begin
   // Universal Links / App Links verifiers (Apple CDN, Google) fetch these
   // anonymously; they must never bounce to /signin (module `mobile`).
   if (pathname.startsWith("/.well-known/")) return NextResponse.next();
+  // kit-module:device-auth-end
   if (PUBLIC_PATHS.has(pathname)) return NextResponse.next();
 
   const session = await edgeAuth();

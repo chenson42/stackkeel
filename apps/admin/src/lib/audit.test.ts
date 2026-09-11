@@ -63,9 +63,11 @@ import { getRequestIp } from "@/lib/request-ip";
 // ---------------------------------------------------------------------------
 
 const EXPECTED_ENTRIES: Record<keyof typeof AUDIT_ACTIONS, string> = {
+  // kit-module:whats-new-begin
   WHATS_NEW_ENTRY_CREATED: "admin.whats_new.created",
   WHATS_NEW_ENTRY_UPDATED: "admin.whats_new.updated",
   WHATS_NEW_ENTRY_DELETED: "admin.whats_new.deleted",
+  // kit-module:whats-new-end
   ADMIN_USER_CREATED: "admin.user.created",
   ADMIN_INVITE_SENT: "admin.invite.sent",
   ADMIN_INVITE_CONSUMED: "admin.invite.consumed",
@@ -86,17 +88,23 @@ const EXPECTED_ENTRIES: Record<keyof typeof AUDIT_ACTIONS, string> = {
   ADMIN_PASSWORD_CHANGED: "admin.password.changed",
   ADMIN_ACCESS_DENIED: "admin.access.denied",
   RATE_LIMIT_BLOCKED: "rate_limit.blocked",
+  // kit-module:flags-admin-begin
   FLAG_UPDATED: "admin.flag.updated",
+  // kit-module:flags-admin-end
+  // kit-module:helpdesk-begin
   TICKET_STATUS_CHANGED: "ticket.status_changed",
   TICKET_ASSIGNED: "ticket.assigned",
   TICKET_RECLASSIFIED: "ticket.reclassified",
   TICKET_AREA_CHANGED: "ticket.area_changed",
   TICKET_PRIORITY_CHANGED: "ticket.priority_changed",
   FEEDBACK_PROMOTED_TO_TICKET: "feedback.promoted_to_ticket",
+  // kit-module:helpdesk-end
   BRANDING_UPDATED: "branding.updated",
   // Device auth (module `mobile`, 2026-09-11-phase-4-mobile)
+  // kit-module:device-auth-begin
   DEVICE_REVOKED: "device.revoked",
   APP_RELEASE_POLICY_UPDATED: "app_release.policy_updated",
+  // kit-module:device-auth-end
 };
 
 const EXPECTED_COUNT = Object.keys(EXPECTED_ENTRIES).length;

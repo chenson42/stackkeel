@@ -20,9 +20,11 @@ import { getRequestIp } from "@/lib/request-ip";
 // admin/users/actions.ts), scoped to this app only.
 export const AUDIT_ACTIONS = {
   // What's-new CRUD (announcements shown to every user).
+  // kit-module:whats-new-begin
   WHATS_NEW_ENTRY_CREATED: "admin.whats_new.created",
   WHATS_NEW_ENTRY_UPDATED: "admin.whats_new.updated",
   WHATS_NEW_ENTRY_DELETED: "admin.whats_new.deleted",
+  // kit-module:whats-new-end
   // User creation (createUserAction) + invite delivery.
   ADMIN_USER_CREATED: "admin.user.created",
   ADMIN_INVITE_SENT: "admin.invite.sent",
@@ -105,25 +107,31 @@ export const AUDIT_ACTIONS = {
   // makes a flag flip traceable in the same cross-app audit viewer this app
   // already ships (apps/admin/src/app/(app)/audit/page.tsx reads this app's
   // own audit_events table alongside a predecessor app's and Portal's).
+  // kit-module:flags-admin-begin
   FLAG_UPDATED: "admin.flag.updated",
+  // kit-module:flags-admin-end
   // Helpdesk operator mutations (module `helpdesk`). Every ticket STATE
   // change is audited — status/assignment/vocabulary edits are the
   // operator-privilege mutations; ordinary thread replies are content
   // authoring and carry an audit-exempt at the call site instead.
+  // kit-module:helpdesk-begin
   TICKET_STATUS_CHANGED: "ticket.status_changed",
   TICKET_ASSIGNED: "ticket.assigned",
   TICKET_RECLASSIFIED: "ticket.reclassified",
   TICKET_AREA_CHANGED: "ticket.area_changed",
   TICKET_PRIORITY_CHANGED: "ticket.priority_changed",
   FEEDBACK_PROMOTED_TO_TICKET: "feedback.promoted_to_ticket",
+  // kit-module:helpdesk-end
   // Branding (module `core`): the brand row drives every page's rendered
   // identity — a defacement vector, so every save is audited.
   BRANDING_UPDATED: "branding.updated",
   // Device auth (module `mobile`, 2026-09-11-phase-4-mobile). Operator
   // revoke of ANY user's device + release-policy edits (the policy can
   // hard-block every native install, so a save is security-relevant).
+  // kit-module:device-auth-begin
   DEVICE_REVOKED: "device.revoked",
   APP_RELEASE_POLICY_UPDATED: "app_release.policy_updated",
+  // kit-module:device-auth-end
 } as const;
 
 export type AuditAction = (typeof AUDIT_ACTIONS)[keyof typeof AUDIT_ACTIONS];
