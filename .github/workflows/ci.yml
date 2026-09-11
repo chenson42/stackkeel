@@ -61,6 +61,9 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: "22"
+          # This job never runs `pnpm install`; without this, setup-node v5's
+          # automatic packageManager cache save fails the job post-run.
+          package-manager-cache: false
 
       - name: Validate commit messages
         run: node scripts/validate-commit-range.mjs "origin/${{ github.base_ref }}..HEAD"
@@ -79,6 +82,9 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version: "22"
+          # This job never runs `pnpm install`; without this, setup-node v5's
+          # automatic packageManager cache save fails the job post-run.
+          package-manager-cache: false
 
       - name: kit-check --strict
         run: node scripts/kit/kit-check.mjs --strict
