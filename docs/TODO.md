@@ -58,6 +58,15 @@ Single backlog ledger. Reconcile in the same commit that creates or resolves an 
 - [ ] Phase 7 — Dogfood verification: full Playwright e2e; personalize dry-run in a
       scratch clone (strip mobile+helpdesk variant must build); kit-check matrix
       (canonical / fresh clone / declined); tag `v0.1.0`
+  - [x] Playwright smoke suites (portal 9, admin 4) running green against a live
+        Neon DB, self-seeding via `db:seed:e2e`
+        (2026-09-11-phase-7-e2e-smoke-suites) — 2026-09-11
+  - [ ] e2e in CI: add `NEON_API_KEY` + `NEON_PROJECT_ID` repo secrets so
+        `.github/workflows/e2e.yml`'s gate opens — 2026-09-11
+  - [ ] Feedback prompt-card e2e (renders on a day-boundary schedule; the ticket
+        flow covers the analogous form round-trip for now) — 2026-09-11
+  - [ ] Cross-app SSO cookie e2e (needs a deployed env with
+        `AUTH_COOKIE_DOMAIN`) — 2026-09-11
 
 ## Phase 2 follow-ups (from the work-log's Deviations)
 

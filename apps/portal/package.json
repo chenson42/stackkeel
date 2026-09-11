@@ -18,7 +18,8 @@
     "deck": "npm run deck:pptx && npm run deck:pdf",
     "deck:pptx": "npx --yes @marp-team/marp-cli deck/slides.md --pptx --allow-local-files",
     "deck:pdf": "npx --yes @marp-team/marp-cli deck/slides.md --pdf --allow-local-files",
-    "deck:html": "npx --yes @marp-team/marp-cli deck/slides.md --html --watch --allow-local-files"
+    "deck:html": "npx --yes @marp-team/marp-cli deck/slides.md --html --watch --allow-local-files",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@auth/drizzle-adapter": "^1.11.2",
@@ -27,6 +28,7 @@
     "@repo/brand": "workspace:*",
     "@repo/db": "workspace:*",
     "@repo/permissions": "workspace:*",
+    "@repo/tokens": "workspace:*",
     "@repo/ui": "workspace:*",
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.38.0",
@@ -37,6 +39,7 @@
     "lucide-react": "^1.14.0",
     "next": "^16.2.6",
     "next-auth": "5.0.0-beta.32",
+    "next-themes": "^0.4.6",
     "otplib": "^13.4.0",
     "qrcode": "^1.5.4",
     "react": "^19.2.6",
@@ -47,9 +50,7 @@
     "resend": "^6.12.3",
     "server-only": "^0.0.1",
     "sonner": "^2.0.7",
-    "tailwind-merge": "^3.6.0",
-    "@repo/tokens": "workspace:*",
-    "next-themes": "^0.4.6"
+    "tailwind-merge": "^3.6.0"
   },
   "devDependencies": {
     "@repo/config": "workspace:*",

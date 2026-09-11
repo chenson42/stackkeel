@@ -35,3 +35,4 @@ e2e/support/.auth/
 # a narrow identity-style bootstrap config mirroring the ancestor kit's
 # drizzle.identity.config.ts — disposable, file-based, never the live DB.
 .drizzle-identity-local/
+e2e/support/.auth/

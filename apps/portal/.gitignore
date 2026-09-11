@@ -35,3 +35,4 @@ e2e/support/.auth/
 
 # Pre-push gate marker (scripts/pre-push-gate.mjs --stamp) — per-machine, never committed
 .claude/pre-push-ok.json
+e2e/support/.auth/

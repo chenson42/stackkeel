@@ -29,6 +29,7 @@
     "prepare": "bash scripts/install-hooks.sh"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "turbo": "^2.5.0"
   },
   "pnpm": {
