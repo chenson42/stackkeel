@@ -116,8 +116,13 @@ async function loadAuthorizeWithEnv(env: Record<string, string | undefined>): Pr
   return credentialsProvider.options.authorize;
 }
 
+// loadAuthorizeWithEnv re-imports the whole @/auth module graph after
+// vi.resetModules(); the cold import alone can exceed vitest's 5s default on a
+// loaded CI runner, so these tests carry an explicit generous timeout.
+const SLOW_IMPORT_TIMEOUT_MS = 30_000;
+
 describe("apps/admin/src/auth.ts — RATE_LIMIT_LOGIN_MAX / RATE_LIMIT_LOGIN_WINDOW_SECONDS env-gating", () => {
-  it("defaults to the unchanged production values (max: 5, windowSeconds: 60) when unset", async () => {
+  it("defaults to the unchanged production values (max: 5, windowSeconds: 60) when unset", { timeout: SLOW_IMPORT_TIMEOUT_MS }, async () => {
     const authorize = await loadAuthorizeWithEnv({
       RATE_LIMIT_LOGIN_MAX: undefined,
       RATE_LIMIT_LOGIN_WINDOW_SECONDS: undefined,
@@ -131,7 +136,7 @@ describe("apps/admin/src/auth.ts — RATE_LIMIT_LOGIN_MAX / RATE_LIMIT_LOGIN_WIN
     expect(limit).toEqual({ max: 5, windowSeconds: 60 });
   });
 
-  it("reads an env override — the e2e elevation path this fix adds", async () => {
+  it("reads an env override — the e2e elevation path this fix adds", { timeout: SLOW_IMPORT_TIMEOUT_MS }, async () => {
     const authorize = await loadAuthorizeWithEnv({
       RATE_LIMIT_LOGIN_MAX: "1234",
       RATE_LIMIT_LOGIN_WINDOW_SECONDS: "77",
