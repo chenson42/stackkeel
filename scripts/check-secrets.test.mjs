@@ -94,6 +94,13 @@ describe("checkSecrets — email allowlist", () => {
     assert.equal(checkSecrets(file("host part user@db.internal.example looks odd")).length, 0);
   });
 
+  it("allows email-shaped filenames (asset-catalog scale suffixes)", () => {
+    assert.equal(
+      checkSecrets(file('"filename" : "AppIcon-512@2x.png", plus logo@3x.webp')).length,
+      0,
+    );
+  });
+
   it("honors leak-ok on an email line", () => {
     const v = checkSecrets(file("<!-- leak-ok: public contact -->\nwrite hello@somewhere.org"));
     assert.equal(v.length, 0);

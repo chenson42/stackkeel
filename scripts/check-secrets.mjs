@@ -50,6 +50,12 @@ export const SAFE_EMAIL_DOMAIN_RE =
 // (git@github.com:org/repo.git) matches the email regex coincidentally.
 export const GIT_REMOTE_EMAIL_RE = /^git@(github\.com|gitlab\.com|bitbucket\.org)$/i;
 
+// Filenames like "AppIcon-512@2x.png" are email-shaped ("512@2x.png") but the
+// apparent TLD is a file extension — never a real mailbox. Generated native
+// projects (Xcode asset catalogs) are full of these.
+export const FILE_EXTENSION_TLD_RE =
+  /\.(png|jpe?g|gif|svg|webp|ico|icns|pdf|json|ts|tsx|js|jsx|mjs|cjs|css|scss|md|txt|ya?ml|xml|plist|storyboard|xcassets|html)$/i;
+
 // A connection-string userinfo segment is coincidentally email-shaped once
 // you look at just the "word@word.tld" tail — these local-parts are // leak-ok: the rule's own doc comment
 // placeholder credential words, never a real person's mailbox.
@@ -148,6 +154,7 @@ export function checkSecrets(files) {
         const email = m[0];
         if (SAFE_EMAIL_DOMAIN_RE.test(email)) continue;
         if (GIT_REMOTE_EMAIL_RE.test(email)) continue;
+        if (FILE_EXTENSION_TLD_RE.test(email)) continue;
         const localPart = email.slice(0, email.indexOf("@"));
         if (CONNECTION_STRING_LOCAL_PART_RE.test(localPart)) continue;
         if (OK_RE.test(line) || OK_RE.test(prevLine)) continue;
