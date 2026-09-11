@@ -3,7 +3,12 @@ title: AI-Assisted Development Workflow for Claude, Codex, and Copilot
 description: "Stackkeel's six-phase development pipeline for AI coding assistants: analyst, architect, tech lead, implementer, and QA roles, work-log discipline, evidence classes, and quality gates enforced by git hooks and CI."
 ---
 
+import { Image } from "astro:assets";
+import worklog from "../../assets/screenshots/worklog.png";
+
 The kit ships an opinionated AI-assisted development workflow, described tool-neutrally in `AGENTS.md` so any assistant can execute it.
+
+<Image src={worklog} alt="A real work-log from the kit's own repository: the six-phase status table with owners, verdicts, and dates rendered on GitHub" />
 
 ## The six phases
 
@@ -18,7 +23,11 @@ Every feature gets a work-log file *before* code (`docs/work-log/`), classified 
 
 ## Evidence discipline
 
-A completed phase carries **evidence, not checkmarks**: claims are either *Verified* (a command was run and its output recorded) or *Indicative* (reasoned but untested), and each agent's file states its verification contract. Work-log entries include a "What was NOT verified" section. Honesty about the gaps is what makes the ledger useful.
+A completed phase carries **evidence, not checkmarks**: claims are either *Verified* (the implementation was read, file and line range cited) or *Indicative* (everything else — grep hits, filenames, comments, prior docs). Indicative can motivate a claim and can never support one. Each phase re-derives its predecessor's load-bearing claims *before* reading the claimed answers, then diffs — trust is earned per handoff, not assumed. Work-log entries include a "What was NOT verified" section; honesty about the gaps is what makes the ledger useful.
+
+Two honest caveats, stated here because "enforced" invites over-reading. The work-log gate verifies that citations are **present**; no mechanical check can verify they are true — the derive-then-diff entry check is what does that, and it is a discipline, not a script. And a claim that asserts its own verification ("confirmed by direct search") is still Indicative: the assertion is not the verification.
+
+Work-logs should be sized to the work. A small feature's log runs about a hundred lines — see the [worked example](https://github.com/chenson42/stackkeel/blob/main/docs/work-log/_example-small-feature.md) shipped in the kit — while the kit's own multi-thousand-line bootstrap logs documented whole construction phases and are the ceiling, not the norm.
 
 ## Enforcement stack
 

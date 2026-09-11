@@ -4,6 +4,9 @@
 
 **Production-ready apps. AI-native development. No model lock-in.**
 
+*The keel is the first thing a shipyard lays down — the spine the whole vessel is
+built on. Stackkeel is that keel for your stack.*
+
 Stackkeel is an open-source Next.js monorepo starter kit built for AI-assisted
 software development. Start with a production-ready portal, admin app,
 authentication, RBAC, audit logging, queued email, a helpdesk, dynamic theming, and

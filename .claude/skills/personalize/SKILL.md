@@ -131,8 +131,12 @@ set `DATABASE_URL`; `openssl rand -base64 32` → `AUTH_SECRET`; same →
 OAuth client + redirect URIs per kept app; `INITIAL_ADMIN_EMAILS`; Resend key +
 verified sender; `NEXT_PUBLIC_APP_URL`/`AUTH_URL` per deploy target; Upstash (or
 accept in-memory rate limiting); Turnstile keys (or leave no-op); icon/wordmark asset
-replacement beyond the generated ones; create the GitHub repo + push; hosting setup
-(e.g. Vercel projects per kept app). Conditionals: **shell kept** → set the deployed
+replacement beyond the generated ones; create the GitHub repo + push; **after the
+first push, open the repo's Actions tab and confirm the CI workflow actually ran on
+your default branch** — instructions in this kit claim CI enforcement, and a
+workflow that exists but never triggers makes that claim silently false (the
+`check-instructions` tripwire catches the empty-directory case, but only you can
+confirm the first real run); hosting setup (e.g. Vercel projects per kept app). Conditionals: **shell kept** → set the deployed
 portal URL for `npx cap sync`, Apple/Google dev accounts, real bundle ids in stores;
 **mobile kept** → EAS account, `EXPO_PUBLIC_API_URL`; **docs-site kept** → enable
 GitHub Pages on the new repo (the workflow guard was retargeted in Step 7); **oidc

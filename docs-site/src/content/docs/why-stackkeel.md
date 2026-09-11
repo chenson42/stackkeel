@@ -3,6 +3,11 @@ title: Why Stackkeel Exists
 description: "The idea behind Stackkeel: AI coding agents inverted the old rule that less process is better. When coordination costs API calls instead of meetings, disciplined software process becomes the cheapest way to build."
 ---
 
+First, the name: in a shipyard, the keel is laid before anything else — the single
+structural spine every frame, deck, and plate attaches to. That is what this kit
+wants to be for an application stack, and the workflow below is why laying it
+first matters.
+
 For thirty years, the winning move in software was less process. Small teams beat big
 ones. Lightweight beat heavyweight. Every methodology that added coordination steps
 eventually lost to one that removed them, because process overhead is human

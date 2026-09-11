@@ -241,6 +241,12 @@ uniqueness assumption contradicted by the actual primary key.)
 The work-log gate checks that citations are *present*; it cannot check that they are true.
 A green gate is the floor, not the proof.
 
+**A claim asserting its own verification is still Indicative.** "X is absent — confirmed by
+direct search" reads as Verified and survives review precisely because it pre-empts the
+question; in this kit's ancestry one such line outlived the mechanism it described by
+months. The assertion of verification is not the verification — re-derive it or class it
+Indicative.
+
 ## Key Invariants
 
 1. **Server Components by default.** Add `'use client'` only for event handlers, hooks,

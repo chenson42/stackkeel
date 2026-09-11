@@ -289,7 +289,7 @@ export function evaluateWorklogGate({
 function collectWorklogs() {
   if (!existsSync(WORKLOG_DIR)) return [];
   return readdirSync(WORKLOG_DIR)
-    .filter((f) => f.endsWith(".md") && f !== "_template.md")
+    .filter((f) => f.endsWith(".md") && !f.startsWith("_"))
     .map((f) => {
       const relPath = `docs/work-log/${f}`;
       let content = "";

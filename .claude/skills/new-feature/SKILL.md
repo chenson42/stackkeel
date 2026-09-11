@@ -8,7 +8,7 @@ argument-hint: "[app] [feature-name]"
 
 When the user invokes `/new-feature`, do not write implementation code. Instead, gather intent, scaffold a work-log entry, and hand off to Phase 1 of the pipeline.
 
-The feature name may be provided as `$ARGUMENTS`. **First establish which app(s) this targets** — `portal`, `admin`, `shell`, `mobile`, or a shared `packages/*` change — if it isn't already obvious from context.
+The feature name may be provided as `$ARGUMENTS`. **First establish which app(s) this targets** — any directory under `apps/` (enumerate `apps/*` rather than assuming the kit's original four; forks add apps), or a shared `packages/*` change — if it isn't already obvious from context.
 
 ## The Pipeline
 
@@ -29,7 +29,7 @@ A SHIP IT from Phase 6 is the only verdict that closes a feature.
 
 Ask the user (if not already provided):
 
-1. **App(s)** — `portal`, `admin`, `shell`, `mobile`, or shared `packages/*`. A feature with a member surface and a triage surface (like the helpdesk) spans portal + admin in one entry; a shared-package change names every consuming app it will alter.
+1. **App(s)** — any app under `apps/` (list the directory, don't assume the original four), or shared `packages/*`. A feature with a member surface and a triage surface (like the helpdesk) spans portal + admin in one entry; a shared-package change names every consuming app it will alter.
 2. **Feature name** — short, slug-friendly (e.g., "api keys", "ticket attachments").
 3. **Surface** — public, member-only, admin-only, native-only, or a mix.
 4. **Value** — why this feature matters. The problem it solves or the user need it serves. *Required.*

@@ -41,7 +41,7 @@ hero:
 
 import { Image } from "astro:assets";
 import portalHome from "../../assets/screenshots/portal-home.png";
-import adminUsers from "../../assets/screenshots/admin-users.png";
+import worklog from "../../assets/screenshots/worklog.png";
 import adminBranding from "../../assets/screenshots/admin-branding.png";
 import adminTickets from "../../assets/screenshots/admin-tickets.png";
 
@@ -54,12 +54,20 @@ AI coding assistant you use.
 
 ## Why Stackkeel
 
+The keel is the first thing a shipyard lays down: the spine the whole vessel is
+built on. Stackkeel is that keel for your stack.
+
 **Production foundation.** Authentication, RBAC, admin screens, audit logging, email,
 helpdesk, theming, and mobile are finished infrastructure, not TODO comments. More
 than 1,000 unit tests and a Playwright suite ship with the kit.
 
-**AI-native workflow.** A structured [six-phase development pipeline](/workflow/)
-with work logs, evidence discipline, and quality gates enforced by git hooks and CI.
+**Evidence-disciplined workflow.** A structured
+[six-phase development pipeline](/workflow/) where a claim is either *Verified*
+(the implementation was read, file and lines cited) or *Indicative* (everything
+else), each phase re-derives its predecessor's claims before trusting them, and the
+gates live in git hooks and CI. The kit's own
+[work logs](https://github.com/chenson42/stackkeel/tree/main/docs/work-log) are the
+receipts.
 The process lives in the repository, so it survives context resets and model upgrades.
 
 **No model lock-in.** Instructions use the [AGENTS.md](https://agents.md) standard and
@@ -72,7 +80,7 @@ Actual screenshots of the shipped apps, running the kit's placeholder brand.
 
 <Image src={portalHome} alt="Stackkeel member portal home page with navigation sidebar, feature tiles for What's new, Feedback, Support, and Account, and a feedback prompt card" />
 
-<Image src={adminUsers} alt="Stackkeel admin panel user management screen listing seeded users with roles and status" />
+<Image src={worklog} alt="A real Stackkeel work-log on GitHub showing the six-phase status table with owners, verdicts, and dates — the pipeline's actual artifact, not a mockup" />
 
 <Image src={adminTickets} alt="Stackkeel admin helpdesk triage queue showing a filed support ticket with status, priority, and area filters" />
 

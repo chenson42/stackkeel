@@ -169,8 +169,43 @@ if (!hasWorkflows) {
       );
     });
   }
+} else {
+  // Workflows existing is not the same as workflows triggering. The known
+  // failure mode in this kit's ancestry: a fork works on a branch its ci.yml
+  // never matches, and the instructions' "CI enforces X" quietly becomes
+  // false while the file sits there looking healthy. Cheap local check: the
+  // primary CI workflow's push trigger must cover the repo's default branch.
+  try {
+    const ciPath = path.join(ROOT, ".github/workflows/ci.yml");
+    if (existsSync(ciPath)) {
+      const ci = readFileSync(ciPath, "utf8");
+      const pushBlock = ci.match(/on:\s*[\s\S]*?push:\s*\n\s*branches:\s*\[([^\]]*)\]/);
+      if (pushBlock) {
+        const branches = pushBlock[1].split(",").map((b) => b.trim().replace(/['"]/g, ""));
+        let defaultBranch = "main";
+        try {
+          defaultBranch = execFileSync(
+            "git",
+            ["symbolic-ref", "--short", "refs/remotes/origin/HEAD"],
+            { cwd: ROOT, encoding: "utf8", stdio: ["ignore", "pipe", "ignore"] },
+          ).trim().replace(/^origin\//, "");
+        } catch {
+          /* no origin/HEAD ref — keep the "main" assumption */
+        }
+        if (!branches.includes(defaultBranch) && !branches.includes("*")) {
+          failures.push(
+            `.github/workflows/ci.yml push trigger covers [${branches.join(", ")}] but the ` +
+              `default branch is "${defaultBranch}" — CI will never run on it, and every ` +
+              `instruction claiming CI enforcement is silently false. Update the trigger.`,
+          );
+        }
+      }
+    }
+  } catch {
+    /* unreadable ci.yml is caught by CI itself */
+  }
 }
-checked.push("no instruction claims CI enforcement that does not exist");
+checked.push("no instruction claims CI enforcement that does not exist or cannot trigger");
 
 // ── Check 3 — every hook command in .claude/settings.json resolves ──────────
 //
