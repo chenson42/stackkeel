@@ -86,6 +86,21 @@ function instructionFiles() {
  * written when something is retired. Keep this list tight: an over-broad
  * exemption turns the check into decoration.
  */
+// A reference can legitimately name a file that does not exist yet, when the
+// instruction is describing a DESIGNED-but-unbuilt mechanism rather than
+// claiming a present capability. That is allowed, but only when the prose says
+// so in as many words: the literal phrase "not yet implemented" must appear on
+// the line or immediately around it.
+//
+// Deliberately narrow. A loose marker ("planned", "TODO", "coming") would
+// become the default escape hatch within a week, and the point of this check is
+// that a reader can tell what is real. Spelling it out costs the author three
+// words and tells every future reader exactly where they stand — which is the
+// whole job.
+function isUnbuiltNote(line) {
+  return /\bnot yet implemented\b/i.test(line);
+}
+
 function isHistoricalNote(line) {
   return /\b(was|were|is|are)\s+(removed|deleted|retired|replaced|dropped)\b/i.test(line)
     || /\bno longer\b/i.test(line)
@@ -275,10 +290,27 @@ checked.push("package scripts named in instructions exist in the package they na
 
 // ── Check 5 — repo-root-relative paths named in instructions exist ─────────
 //
-// Scoped to paths starting apps/, packages/, or .claude/ — only those are
-// unambiguously repo-root-relative. Globs and `...` gestures are skipped —
-// they are patterns, not paths. An illustrative filename in a naming
-// convention or a table of examples is not a claim that the file exists.
+// Scoped to paths starting apps/, packages/, scripts/, or .claude/ — only
+// those are unambiguously repo-root-relative. Globs and `...` gestures are
+// skipped — they are patterns, not paths. An illustrative filename in a
+// naming convention or a table of examples is not a claim that the file
+// exists.
+//
+// `scripts/` was added 2026-09-11. It had been omitted, and the omission was
+// load-bearing: scripts/ is where every tripwire in this repo lives, so the
+// one root directory the instruction-checker could not see was the directory
+// holding the enforcement it exists to keep honest. Four tripwires —
+// check-schema-prerequisites, check-driver-capability, check-audit-coverage,
+// and feedback-check — were described in the present tense across skills,
+// agent files, and a docs-site page while no such file existed, and this
+// check passed green the whole time.
+//
+// Instruction prose names a script two ways, so both are matched:
+//   - inline code:   `scripts/check-secrets.mjs`
+//   - a command:     node scripts/check-secrets.mjs   (often inside a fence)
+// Matching only the backticked form misses the more consequential case — a
+// command block is something a reader is told to RUN, and a missing file
+// there fails at the terminal rather than merely misinforming.
 //
 // Two tolerances keep this useful during phased scaffolding without letting
 // real rot through:
@@ -288,7 +320,10 @@ checked.push("package scripts named in instructions exist in the package they na
 //      inside an EXISTING module still fails.
 //   2. A git-ignored path (.claude/trivial-ok.json, .claude/pre-push-ok.json)
 //      is runtime state that legitimately never exists in a fresh checkout.
-const PATH_REF = /`((?:apps|packages|\.claude)\/[A-Za-z0-9._/-]+)`/g;
+const PATH_REF = /`((?:apps|packages|scripts|\.claude)\/[A-Za-z0-9._/-]+)`/g;
+
+// A bare `node scripts/foo.mjs` invocation, backticked or not, fenced or not.
+const CMD_REF = /\bnode\s+((?:scripts|apps|packages)\/[A-Za-z0-9._/-]+\.(?:mjs|js|ts))/g;
 
 function isGitIgnored(rel) {
   try {
@@ -310,18 +345,19 @@ for (const rel of instructionFiles()) {
   const text = read(rel);
   if (text === null) continue;
   const seen = new Set();
-  for (const m of text.matchAll(PATH_REF)) {
+  const refs = [...text.matchAll(PATH_REF), ...text.matchAll(CMD_REF)];
+  for (const m of refs) {
     const ref = m[1];
     if (ref.includes("*") || ref.includes("...") || ref.endsWith("/")) continue;
     // Markdown wraps sentences, so the qualifier that makes a reference
     // historical ("… are retired") is often on the NEXT line, not the one
     // holding the path. Look at a one-line window either side.
     const lines = text.split("\n");
-    const idx = lines.findIndex((l) => l.includes("`" + ref + "`"));
+    const idx = lines.findIndex((l) => l.includes("`" + ref + "`") || l.includes("node " + ref));
     const line = idx === -1 ? "" : lines.slice(Math.max(0, idx - 1), idx + 2).join(" ");
     const isConventionRow =
       line.trimStart().startsWith("|") && /YYYY|<slug>|<app>|<name>|<type>|X\.Y/.test(line);
-    if (/\bexample\b/i.test(line) || isConventionRow || isHistoricalNote(line)) continue;
+    if (/\bexample\b/i.test(line) || isConventionRow || isHistoricalNote(line) || isUnbuiltNote(line)) continue;
     if (seen.has(ref)) continue;
     seen.add(ref);
     if (isPlannedModuleRef(ref) || isGitIgnored(ref)) continue;

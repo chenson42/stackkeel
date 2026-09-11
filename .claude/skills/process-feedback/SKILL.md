@@ -155,9 +155,10 @@ whole workflow, which is exactly why it needs a flat answer.
 
 - AGENTS.md → Key Invariants — the invariant and the table's other
   constraints (append-only status, display name never email).
-- `scripts/feedback-check.mjs` — the SessionStart hook. Its header carries
-  the same invariant; it prints a count and static text only. Read it as the
-  reference implementation of "count without content."
+- `scripts/feedback-check.mjs` — the SessionStart hook, not yet implemented (2026-09-11).
+  As designed, its header carries the same invariant and it prints a count and
+  static text only — the reference implementation of "count without content."
+  The invariant is binding regardless; it does not depend on the hook existing.
 - The same rule applies to **helpdesk ticket bodies** — they are the same
   threat class. Ticket triage follows this skill's shape: counts and status
   transitions by UUID; humans read content in the admin app.

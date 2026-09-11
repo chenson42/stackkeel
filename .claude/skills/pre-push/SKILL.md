@@ -98,8 +98,14 @@ If a schema file changed with no matching committed migration, run `pnpm db:gene
 
 ## Step 5b: Schema Prerequisite Gate (whenever a migration file is in the outgoing diff)
 
+> **This gate is not yet implemented** (2026-09-11): `scripts/check-schema-prerequisites.mjs` is not yet implemented and running it fails with *Cannot find module*.
+> The design below is settled and the `-- VERIFY:` convention it depends on is
+> already in use in `packages/db/migrations/`. Until the script lands, check by
+> hand that every migration in the outgoing diff has actually been applied to
+> the deploy target, and say so explicitly in the summary.
+
 ```bash
-node scripts/check-schema-prerequisites.mjs
+node scripts/check-schema-prerequisites.mjs   # not yet implemented
 ```
 
 Step 5 compares schema files to the *committed migration set*; nothing there checks whether a committed migration has actually been *applied* to the environment this branch deploys to — this gate is that check. It runs each changed migration's `-- VERIFY: <sql predicate>` against the deploy target. Three outcomes — do not treat the last two as clear to push:

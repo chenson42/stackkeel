@@ -50,7 +50,7 @@ Migrations live in `packages/db/migrations/`, versioned and committed. **Every s
 ```
 
 - The `-- MODULE:` header is what lets `/personalize` strip a deselected feature by deleting its migration files. Core identity/platform schema uses `-- MODULE: core` (never strippable).
-- The `-- VERIFY:` predicate is a self-check `scripts/check-schema-prerequisites.mjs` runs against the deploy target before a push — one predicate per object the migration creates. A migration without one fails the gate.
+- The `-- VERIFY:` predicate is a self-check `scripts/check-schema-prerequisites.mjs` runs against the deploy target before a push — one predicate per object the migration creates. A migration without one fails the gate. **That script is not yet implemented** (2026-09-11) — keep writing the predicates, because they are what makes the gate possible, but nothing checks them mechanically yet.
 - **`pnpm db:generate`** (versioned migration — the default for anything that ships) vs **`pnpm db:push`** (sync a dev database directly — early iteration on a disposable branch only). Before generating, check `packages/db/migrations/` for the latest number and `docs/TODO.md` In Flight for concurrent schema pipelines — sequence explicitly to avoid numbering collisions.
 - Hand-authored SQL (rare) must be idempotent (`CREATE TABLE IF NOT EXISTS`, `ADD COLUMN IF NOT EXISTS`, `INSERT ... WHERE NOT EXISTS`, `pg_indexes` guard before `CREATE INDEX`).
 
