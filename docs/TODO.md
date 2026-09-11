@@ -88,3 +88,13 @@ Single backlog ledger. Reconcile in the same commit that creates or resolves an 
       app against a running server, verify revocation push-out) — Phase 7
 - [ ] Deep-link scheme registration in the generated native projects
       (Info.plist URL types / Android intent-filter) when a fork personalizes
+
+## Docs site & discovery (from the 2026-09-11 external reviews)
+- [ ] Live read-only demo (seeded portal + admin at demo.stackkeel.org) — the
+      reviews' highest-leverage remaining item
+- [ ] Analytics for stackkeel.org (Plausible or Umami; user decision pending)
+- [ ] Submit stackkeel.org to Google Search Console + Bing Webmaster Tools
+      (user accounts required)
+- [ ] Backlink pass: Show HN, r/nextjs writeup, Astro/Starlight showcase,
+      agentskills.io listing, awesome-nextjs / awesome-monorepo PRs
+- [ ] Validate homepage JSON-LD with Google's Rich Results tester after deploy

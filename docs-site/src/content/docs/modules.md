@@ -1,6 +1,6 @@
 ---
-title: Module Catalog
-description: What personalization can keep or strip.
+title: Module Catalog — Apps and Features You Can Keep or Strip
+description: "Every optional Stackkeel module: the admin panel, Capacitor shell, Expo app, docs site, helpdesk, feedback, 2FA, OIDC, email queue, announcements, and admin viewers, each removable cleanly during personalization."
 ---
 
 Modules are the unit of personalization. Each is registered in `scripts/kit/module-registry.json` with everything needed to remove it cleanly: paths, workspace entries, dependencies, `-- MODULE:`-tagged migrations, flag seeds, feature keys, env vars, and doc anchors.

@@ -1,0 +1,153 @@
+---
+title: Cross-AI Starter Kit for Next.js, Expo, and Capacitor
+description: "Stackkeel is an open-source Next.js monorepo starter kit with authentication, an admin panel, RBAC, audit logging, queued email, a helpdesk, dynamic theming, and mobile apps. Built for AI-assisted development with Claude Code, Codex, Copilot, Cursor, and Gemini CLI."
+template: splash
+head:
+  - tag: script
+    attrs:
+      type: application/ld+json
+    content: '{"@context":"https://schema.org","@type":"SoftwareSourceCode","name":"Stackkeel","description":"Open-source Next.js monorepo starter kit with authentication, admin panel, RBAC, audit logging, queued email, helpdesk, dynamic theming, and mobile apps, designed for AI-assisted development.","license":"https://opensource.org/licenses/MIT","codeRepository":"https://github.com/chenson42/stackkeel","programmingLanguage":"TypeScript","url":"https://stackkeel.org","offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"sameAs":["https://github.com/chenson42/stackkeel"]}'
+hero:
+  title: Build production apps with AI without starting from scratch.
+  tagline: A production-ready Next.js monorepo with authentication, admin, permissions, audit logging, email, support, theming, and mobile apps. The AI development workflow works the same in Claude Code, Codex, Copilot, Cursor, and Gemini CLI.
+  image:
+    file: ../../assets/logo.png
+    alt: Stackkeel logo
+  actions:
+    - text: Get started
+      link: /getting-started/
+      icon: right-arrow
+    - text: View on GitHub
+      link: https://github.com/chenson42/stackkeel
+      icon: external
+      variant: minimal
+---
+
+import { Image } from "astro:assets";
+import portalHome from "../../assets/screenshots/portal-home.png";
+import adminUsers from "../../assets/screenshots/admin-users.png";
+import adminBranding from "../../assets/screenshots/admin-branding.png";
+import adminTickets from "../../assets/screenshots/admin-tickets.png";
+
+Most starter kits give you a framework and wish you luck. Stackkeel gives you an
+application: a member portal, an admin control plane, sign-in with two-factor auth,
+roles and permissions, an audit log, queued email, a support-ticket system, runtime
+theming, and native mobile foundations, already wired together and tested. You
+personalize it in one guided session, then build your product on top with whatever
+AI coding assistant you use.
+
+## Why Stackkeel
+
+**Production foundation.** Authentication, RBAC, admin screens, audit logging, email,
+helpdesk, theming, and mobile are finished infrastructure, not TODO comments. Around
+1,200 unit tests and a Playwright suite ship with the kit.
+
+**AI-native workflow.** A structured analyst → architect → implementer → QA pipeline
+with work logs, evidence discipline, and quality gates enforced by git hooks and CI.
+The process lives in the repository, so it survives context resets and model upgrades.
+
+**No model lock-in.** Instructions use the [AGENTS.md](https://agents.md) standard and
+skills use the [Agent Skills](https://agentskills.io) format. Use Claude Code today and
+Codex tomorrow; the project treats them the same. [How that works.](/cross-ai/)
+
+## What it looks like
+
+Actual screenshots of the shipped apps, running the kit's placeholder brand.
+
+<Image src={portalHome} alt="Stackkeel member portal home page with navigation sidebar, feature tiles for What's new, Feedback, Support, and Account, and a feedback prompt card" />
+
+<Image src={adminUsers} alt="Stackkeel admin panel user management screen listing seeded users with roles and status" />
+
+<Image src={adminTickets} alt="Stackkeel admin helpdesk triage queue showing a filed support ticket with status, priority, and area filters" />
+
+<Image src={adminBranding} alt="Stackkeel admin branding editor with a seed color input, type pairing selector, and generated light and dark color ramp previews" />
+
+## Production features included
+
+**Identity and security.** Email/password, Google sign-in, native Google ID-token
+sign-in for mobile, and a config-driven OIDC slot for Okta, Entra, or Auth0. TOTP
+two-factor auth with recovery codes, account lockout, rate limiting, and CSRF-safe
+forms. [Details.](/features/authentication/)
+
+**Access control.** Role-based permissions with a feature catalog, an admin role that
+cannot lock itself out, and a role-editing matrix in the admin app.
+[Details.](/features/permissions/)
+
+**Operations.** An append-only audit log with CI-enforced coverage, feature flags,
+health endpoints, and scheduled cleanup jobs. [Details.](/features/audit-and-flags/)
+
+**Communication.** Database-queued email with retry and backoff, delivery webhooks, an
+admin queue viewer, and "What's New" release announcements.
+[Details.](/features/email-queue/)
+
+**Support.** In-app user feedback that an admin can promote into a full support ticket,
+threaded ticket conversations, and a triage queue with assignment, priority, and
+status controls. [Details.](/features/helpdesk/)
+
+**Branding.** One seed color generates complete light and dark themes with WCAG
+contrast floors enforced by property tests. Editable at runtime from the admin app.
+[Details.](/features/theming/)
+
+**Mobile.** A Capacitor shell that wraps your deployed portal for the app stores, an
+Expo app with device pairing and an offline queue, and admin-controlled minimum-version
+gating. [Details.](/features/mobile/)
+
+## Works with your AI
+
+Claude Code · OpenAI Codex · GitHub Copilot · Cursor · Gemini CLI
+
+One instruction file, one skill format, one enforcement layer. Every assistant that
+reads AGENTS.md and Agent Skills gets the same project knowledge and hits the same
+git-hook and CI gates. Read [One AI workflow, any coding assistant](/cross-ai/) for
+the full story, or [Why Stackkeel](/why-stackkeel/) for the essay that started it.
+
+## A starter kit that doesn't become abandoned boilerplate
+
+Most templates are a one-time copy. Stackkeel has a lifecycle.
+
+1. **Copy.** Create your repository from the GitHub template.
+2. **Personalize.** Your AI assistant interviews you, removes the apps and features you
+   don't need, applies your brand, and records everything in a manifest. The kit
+   detects an unpersonalized copy and insists.
+3. **Build.** Develop with the six-phase workflow, in whichever assistant you prefer.
+4. **Stay current.** `/upstream-sync` classifies new kit commits into a punch-list you
+   review, skipping modules you removed. Nothing is ever auto-applied.
+5. **Contribute back.** `/downstream-sync` packages your generic improvements as
+   executable specs the kit can adopt.
+
+## Under the hood
+
+| Piece | What it is |
+|---|---|
+| `apps/portal` | Member-facing Next.js app: home, account, 2FA, support, feedback |
+| `apps/admin` | Admin control plane: users, roles, flags, audit, tickets, branding |
+| `apps/shell` | Capacitor 8 shell (iOS and Android) that loads the deployed portal |
+| `apps/mobile` | Expo app consuming the portal's API with device tokens |
+| `packages/db` | Drizzle ORM schema, module-tagged migrations, seeds |
+| `packages/auth` | NextAuth v5 factory: providers, 2FA, lockout, session projection |
+| `packages/permissions` | Feature catalog, role model, anti-lockout guarantees |
+| `packages/brand` | OKLCH theming engine: contract, generator, emitter |
+| `packages/ui` + `tokens` | Shared component library and cross-platform design tokens |
+
+Stack: Next.js 16, React 19, TypeScript strict, Tailwind CSS 4, Drizzle + Postgres
+(Neon-ready), NextAuth 5, Turborepo + pnpm, Vitest + Playwright. The
+[architecture page](/architecture/) covers the layout and the invariants that hold
+it together.
+
+## Why not just create-next-app?
+
+`create-next-app` gives you a framework. Stackkeel gives you an application
+foundation: the framework plus auth, admin, RBAC, audit, email, support, mobile, an
+AI workflow, and a maintenance lifecycle. Compared with kits like create-t3-app or
+Makerkit, the difference is the AI-native layer: a repository-resident development
+process, personalization that strips what you don't need, and two-way sync with the
+upstream kit.
+
+## License and status
+
+MIT licensed and free. Version 0.1, released September 2026: new, and built,
+tested, and shipped end-to-end by the same AI workflow it contains. The
+[GitHub repository](https://github.com/chenson42/stackkeel) is the source of truth.
+
+**Ready?** [Get started](/getting-started/) or
+[use the template on GitHub](https://github.com/chenson42/stackkeel/generate).

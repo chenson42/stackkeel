@@ -1,6 +1,6 @@
 ---
-title: Architecture
-description: The monorepo's shape and the invariants that hold it together.
+title: Next.js Monorepo Architecture
+description: "How the Stackkeel Turborepo workspace is organized: portal and admin Next.js apps, shared Drizzle ORM and NextAuth packages, a Capacitor shell, an Expo app, and the load-bearing invariants that keep the whole thing sound."
 ---
 
 ## Layout

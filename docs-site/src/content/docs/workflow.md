@@ -1,6 +1,6 @@
 ---
-title: Development Workflow
-description: The six-phase pipeline, evidence discipline, and the enforcement stack.
+title: AI-Assisted Development Workflow for Claude, Codex, and Copilot
+description: "Stackkeel's six-phase development pipeline for AI coding assistants: analyst, architect, tech lead, implementer, and QA roles, work-log discipline, evidence classes, and quality gates enforced by git hooks and CI."
 ---
 
 The kit ships an opinionated AI-assisted development workflow, described tool-neutrally in `AGENTS.md` so any assistant can execute it.
@@ -18,7 +18,7 @@ Every feature gets a work-log file *before* code (`docs/work-log/`), classified 
 
 ## Evidence discipline
 
-A completed phase carries **evidence, not checkmarks**: claims are either *Verified* (a command was run and its output recorded) or *Indicative* (reasoned but untested), and each agent's file states its verification contract. Work-log entries include a "What was NOT verified" section — honesty about the gaps is what makes the ledger useful.
+A completed phase carries **evidence, not checkmarks**: claims are either *Verified* (a command was run and its output recorded) or *Indicative* (reasoned but untested), and each agent's file states its verification contract. Work-log entries include a "What was NOT verified" section. Honesty about the gaps is what makes the ledger useful.
 
 ## Enforcement stack
 
@@ -30,4 +30,4 @@ A completed phase carries **evidence, not checkmarks**: claims are either *Verif
 | Instruction freshness, symbol drift, secrets, SQL date safety, brand scope | `pnpm check` tripwire suite, run in CI |
 | Escape-rate telemetry | `pnpm stats:escape` feeds the retrospective |
 
-Assistant-specific hooks (`.claude/settings.json`) give fast in-session feedback, but the git hooks and CI are the binding layer — the workflow holds no matter which tool wrote the code.
+Assistant-specific hooks (`.claude/settings.json`) give fast in-session feedback, but the git hooks and CI are the binding layer. The workflow holds no matter which tool wrote the code.

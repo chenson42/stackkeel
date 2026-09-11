@@ -1,9 +1,9 @@
 ---
-title: Kit ↔ Fork Sync
-description: Pulling kit improvements and contributing fixes back.
+title: Keep Your Project in Sync with the Starter Kit
+description: "Stackkeel's two-way sync between the kit and projects built from it: upstream-sync classifies new kit commits into a reviewable punch-list, and downstream-sync packages your generic fixes as contribution specs."
 ---
 
-The kit and its forks stay in touch in both directions. Both directions are **skill-driven and review-first**: nothing is ever auto-applied.
+The kit and its forks stay in touch in both directions. Both are **skill-driven and review-first**: nothing is ever auto-applied.
 
 ## Upstream sync (kit → your project, 14-day cadence)
 

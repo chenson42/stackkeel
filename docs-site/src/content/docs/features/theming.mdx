@@ -1,0 +1,51 @@
+---
+title: Dynamic Theming Engine with WCAG Contrast Guarantees
+description: "Stackkeel generates complete light and dark themes from one seed color using OKLCH color math, enforces WCAG contrast floors with property tests, and lets admins re-brand the running apps from a branding editor."
+---
+
+import { Image } from "astro:assets";
+import adminBranding from "../../../assets/screenshots/admin-branding.png";
+
+Re-branding a template usually means hunting hex codes through CSS files and hoping
+the dark mode still reads. Stackkeel replaces that with a generator: give it one
+seed color and it derives complete light and dark token ramps whose contrast is
+guaranteed, not eyeballed.
+
+<Image src={adminBranding} alt="Stackkeel admin branding editor showing a seed color input, a curated type pairing selector, and generated light and dark color ramps" />
+
+## How it works
+
+`packages/brand` has four parts with strict boundaries:
+
+- **The contract** (`contract.ts`): pure data declaring which design tokens are
+  brandable, which are bounded, and which belong to the platform and can never be
+  re-declared, plus the foreground/background pairs that carry WCAG contrast
+  floors. The partition is closed at the type level.
+- **The generator** (`generate.ts`): a pure function from one sRGB hex to light and
+  dark token sets, using OKLCH color math implemented inline with no color-science
+  dependency. Dark is derived independently, not inverted. When a seed would break
+  a contrast floor, the generator searches along lightness until it clears, and
+  logs every adjustment it made.
+- **The property test**: a sweep of hundreds of seeds across the color space
+  asserting that every legal pair meets its floor in both schemes. Accessibility
+  here is a tested property, not a review comment.
+- **The emitter** (`brand-tokens.tsx`): one server-rendered `<style>` element,
+  scoped to win specificity deterministically, that re-declares only brand tokens.
+  A tripwire fails CI if any other style tag or `dangerouslySetInnerHTML` appears
+  in the apps, so the emitter stays the single theming path.
+
+## Runtime branding
+
+Admins edit the brand at `/branding`: a seed color, one of four curated type
+pairings, and an optional light-only mode, with a live ramp preview. Saves are
+audited and versioned in a history table. The whole system sits behind the
+`ui.brand_theming` flag, so the apps render the static Starter palette until you
+turn it on.
+
+## Personalization and design tokens
+
+During [personalization](/personalization/), `pnpm brand:generate` runs the same
+generator from the command line to produce your static palette. A separate
+`packages/tokens` package holds framework-neutral design tokens (colors, spacing,
+type scale) consumed by both the web component library and the Expo app, so native
+screens share the web's visual language.

@@ -1,7 +1,10 @@
 ---
-title: Getting Started
-description: From template copy to running app.
+title: Getting Started with the Stackkeel AI Development Starter Kit
+description: "Install the Stackkeel Next.js monorepo starter kit: copy the GitHub template, run pnpm install, personalize it with your AI coding assistant, configure Postgres and auth, then launch the portal and admin apps."
 ---
+
+Go from GitHub template to a personalized, running application in one sitting. The
+steps below cover the copy, install, personalization, and first launch.
 
 ## Prerequisites
 

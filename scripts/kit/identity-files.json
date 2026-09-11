@@ -1,35 +1,128 @@
 {
-  "$comment": "Every file that carries the kit's identity (name, slug, URL scheme, bundle id). The personalize skill drives its find-replace pass from THIS list — never from a list inside the skill text — and check-identity-files.mjs fails the canonical repo's tripwires when the kit name appears outside these files (plus the always-exempt docs/, docs-site content, and .claude/ trees). Keep sorted. `note` says what inside the file is identity-bearing.",
+  "$comment": "Every file that carries the kit's identity (name, slug, URL scheme, bundle id). The personalize skill drives its find-replace pass from THIS list \u2014 never from a list inside the skill text \u2014 and check-identity-files.mjs fails the canonical repo's tripwires when the kit name appears outside these files (plus the always-exempt docs/, docs-site content, and .claude/ trees). Keep sorted. `note` says what inside the file is identity-bearing.",
   "kitNamePattern": "stackkeel",
-  "exemptPrefixes": ["docs/", "docs-site/src/content/", ".claude/", "scripts/kit/"],
+  "exemptPrefixes": [
+    "docs/",
+    "docs-site/src/content/",
+    ".claude/",
+    "scripts/kit/"
+  ],
   "files": [
-    { "path": ".github/workflows/docs.yml", "note": "repository guard `chenson42/stackkeel` (twice) — forks keeping docs-site point it at their repo" },
-    { "path": ".github/workflows/kit-sync-reminder.yml", "note": "canonical-repo guard `!= chenson42/stackkeel` — forks keep this UNCHANGED (it names the upstream kit, not the fork)" },
-    { "path": "LICENSE", "note": "copyright holder line" },
-    { "path": "README.md", "note": "title, quickstart, docs URL" },
-    { "path": "apps/admin/public/brand/wordmark.svg", "note": "wordmark text" },
-    { "path": "apps/admin/src/app/icon.svg", "note": "favicon title attr" },
-    { "path": "apps/mobile/app.json", "note": "expo name, slug, scheme, ios bundleIdentifier, android package" },
-    { "path": "apps/portal/.env.example", "note": "NEXT_PUBLIC_APP_SCHEME default + APNS/ANDROID bundle-id examples" },
-    { "path": "apps/portal/public/brand/wordmark.svg", "note": "wordmark text" },
-    { "path": "apps/portal/src/app/icon.svg", "note": "favicon title attr" },
-    { "path": "apps/portal/src/components/mobile/MobileDeepLinkHandler.tsx", "note": "default deep-link scheme fallback" },
-    { "path": "apps/portal/src/components/mobile/deep-link.ts", "note": "default deep-link scheme fallback" },
-    { "path": "apps/shell/AGENTS.md", "note": "app id references in the shim" },
-    { "path": "apps/shell/README.md", "note": "app id + regeneration instructions" },
-    { "path": "apps/shell/android/app/build.gradle", "note": "applicationId + namespace" },
-    { "path": "apps/shell/android/app/src/main/assets/capacitor.config.json", "note": "generated — regenerate via `npx cap sync` after editing capacitor.config.ts" },
-    { "path": "apps/shell/android/app/src/main/assets/public/index.html", "note": "offline stub page title" },
-    { "path": "apps/shell/android/app/src/main/java/com/example/stackkeel/MainActivity.java", "note": "package name AND directory path com/example/stackkeel — rename the directory tree with the package" },
-    { "path": "apps/shell/android/app/src/main/res/values/strings.xml", "note": "app_name, package_name, custom_url_scheme" },
-    { "path": "apps/shell/capacitor.config.ts", "note": "appId + appName (the authoritative pair; native configs regenerate from it)" },
-    { "path": "apps/shell/ios/App/App.xcodeproj/project.pbxproj", "note": "PRODUCT_BUNDLE_IDENTIFIER (all build configs)" },
-    { "path": "apps/shell/ios/App/App/Info.plist", "note": "display name + URL scheme" },
-    { "path": "apps/shell/ios/App/App/capacitor.config.json", "note": "generated — regenerate via `npx cap sync`" },
-    { "path": "apps/shell/ios/App/App/public/index.html", "note": "offline stub page title" },
-    { "path": "apps/shell/public/index.html", "note": "offline stub page title" },
-    { "path": "docs-site/astro.config.mjs", "note": "site/base URL, title, description, GitHub link" },
-    { "path": "kit.json", "note": "kit.name + kit.canonicalUrl (the manifest itself; personalize writes identity.* instead of editing kit.*)" },
-    { "path": "package.json", "note": "root name, description, repository.url" }
+    {
+      "path": ".github/workflows/docs.yml",
+      "note": "repository guard `chenson42/stackkeel` (twice) \u2014 forks keeping docs-site point it at their repo"
+    },
+    {
+      "path": ".github/workflows/kit-sync-reminder.yml",
+      "note": "canonical-repo guard `!= chenson42/stackkeel` \u2014 forks keep this UNCHANGED (it names the upstream kit, not the fork)"
+    },
+    {
+      "path": "LICENSE",
+      "note": "copyright holder line"
+    },
+    {
+      "path": "README.md",
+      "note": "title, quickstart, docs URL"
+    },
+    {
+      "path": "apps/admin/public/brand/wordmark.svg",
+      "note": "wordmark text"
+    },
+    {
+      "path": "apps/admin/src/app/icon.svg",
+      "note": "favicon title attr"
+    },
+    {
+      "path": "apps/mobile/app.json",
+      "note": "expo name, slug, scheme, ios bundleIdentifier, android package"
+    },
+    {
+      "path": "apps/portal/.env.example",
+      "note": "NEXT_PUBLIC_APP_SCHEME default + APNS/ANDROID bundle-id examples"
+    },
+    {
+      "path": "apps/portal/public/brand/wordmark.svg",
+      "note": "wordmark text"
+    },
+    {
+      "path": "apps/portal/src/app/icon.svg",
+      "note": "favicon title attr"
+    },
+    {
+      "path": "apps/portal/src/components/mobile/MobileDeepLinkHandler.tsx",
+      "note": "default deep-link scheme fallback"
+    },
+    {
+      "path": "apps/portal/src/components/mobile/deep-link.ts",
+      "note": "default deep-link scheme fallback"
+    },
+    {
+      "path": "apps/shell/AGENTS.md",
+      "note": "app id references in the shim"
+    },
+    {
+      "path": "apps/shell/README.md",
+      "note": "app id + regeneration instructions"
+    },
+    {
+      "path": "apps/shell/android/app/build.gradle",
+      "note": "applicationId + namespace"
+    },
+    {
+      "path": "apps/shell/android/app/src/main/assets/capacitor.config.json",
+      "note": "generated \u2014 regenerate via `npx cap sync` after editing capacitor.config.ts"
+    },
+    {
+      "path": "apps/shell/android/app/src/main/assets/public/index.html",
+      "note": "offline stub page title"
+    },
+    {
+      "path": "apps/shell/android/app/src/main/java/com/example/stackkeel/MainActivity.java",
+      "note": "package name AND directory path com/example/stackkeel \u2014 rename the directory tree with the package"
+    },
+    {
+      "path": "apps/shell/android/app/src/main/res/values/strings.xml",
+      "note": "app_name, package_name, custom_url_scheme"
+    },
+    {
+      "path": "apps/shell/capacitor.config.ts",
+      "note": "appId + appName (the authoritative pair; native configs regenerate from it)"
+    },
+    {
+      "path": "apps/shell/ios/App/App.xcodeproj/project.pbxproj",
+      "note": "PRODUCT_BUNDLE_IDENTIFIER (all build configs)"
+    },
+    {
+      "path": "apps/shell/ios/App/App/Info.plist",
+      "note": "display name + URL scheme"
+    },
+    {
+      "path": "apps/shell/ios/App/App/capacitor.config.json",
+      "note": "generated \u2014 regenerate via `npx cap sync`"
+    },
+    {
+      "path": "apps/shell/ios/App/App/public/index.html",
+      "note": "offline stub page title"
+    },
+    {
+      "path": "apps/shell/public/index.html",
+      "note": "offline stub page title"
+    },
+    {
+      "path": "docs-site/astro.config.mjs",
+      "note": "site/base URL, title, description, GitHub link"
+    },
+    {
+      "path": "kit.json",
+      "note": "kit.name + kit.canonicalUrl (the manifest itself; personalize writes identity.* instead of editing kit.*)"
+    },
+    {
+      "path": "package.json",
+      "note": "root name, description, repository.url"
+    },
+    {
+      "path": "docs-site/public/robots.txt",
+      "note": "Sitemap URL carries the docs-site domain; personalize points it at the fork's own Pages URL or removes it"
+    }
   ]
 }
