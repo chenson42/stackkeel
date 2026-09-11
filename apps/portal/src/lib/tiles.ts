@@ -36,12 +36,22 @@ export const PORTAL_TILES: PortalTile[] = [
     order: 20,
   },
   {
+    id: "support",
+    label: "Support",
+    description: "File a ticket and follow it to resolution.",
+    // Same check as proxy.ts's /support PROTECTION_RULES entry and the
+    // page's own guard — tiles are hidden, never shown-then-denied.
+    href: "/support",
+    requiredFeature: "tickets.file",
+    order: 30,
+  },
+  {
     id: "account",
     label: "Account",
     description: "Profile, email, password, and two-factor settings.",
     href: "/account",
     requiredFeature: null,
-    order: 30,
+    order: 40,
   },
 ];
 

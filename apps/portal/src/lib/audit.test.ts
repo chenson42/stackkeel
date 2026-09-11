@@ -81,6 +81,7 @@ const EXPECTED_ENTRIES: Record<keyof typeof AUDIT_ACTIONS, string> = {
   USER_PASSWORD_RESET_REQUESTED: "user.password_reset_requested",
   USER_PASSWORD_RESET_COMPLETED: "user.password_reset_completed",
   // TOTP verification attempts (src/app/(auth)/totp/actions.ts)
+  TICKET_FILED: "ticket.filed",
   TOTP_VERIFY_FAILED: "totp.verify_failed",
   TOTP_VERIFY_SUCCEEDED: "totp.verify_succeeded",
   TOTP_RECOVERY_FAILED: "totp.recovery_failed",

@@ -6,6 +6,7 @@ import { auth } from "@/auth";
 import { db } from "@/lib/db";
 import { FEATURES, hasFeature } from "@repo/permissions";
 import { FeedbackStatusControl } from "./feedback-status-control";
+import { PromoteToTicketButton } from "./promote-to-ticket-button";
 
 // Cross-app feedback triage viewer (Increment 6, step 6a —
 // apps/portal/docs/work-log/2026-09-06-feedback-admin-triage.md). Modeled
@@ -94,6 +95,9 @@ export default async function FeedbackPage({
   if (!session?.user || !hasFeature(session.user.features, FEATURES.ADMIN_FEEDBACK)) {
     redirect("/access-pending");
   }
+  // Promotion CREATES a ticket, so the control needs admin.tickets on top
+  // of admin.feedback — the server action enforces the same split.
+  const canTickets = hasFeature(session.user.features, FEATURES.ADMIN_TICKETS);
 
   const sp = await searchParams;
   const currentApp = isValid(APPS, sp.app) ? sp.app : "all";
@@ -232,6 +236,19 @@ export default async function FeedbackPage({
                           {STATUS_LABELS[row.status] ?? row.status}
                         </span>
                         <FeedbackStatusControl feedbackId={row.id} currentStatus={row.status} />
+                        {canTickets &&
+                          !row.promotedToTicketId &&
+                          (row.status === "new" || row.status === "triaged") && (
+                            <PromoteToTicketButton feedbackId={row.id} />
+                          )}
+                        {row.promotedToTicketId && (
+                          <Link
+                            href={`/tickets/${row.promotedToTicketId}`}
+                            className="w-fit text-xs text-muted-foreground underline-offset-4 hover:underline"
+                          >
+                            View ticket
+                          </Link>
+                        )}
                       </div>
                     </td>
                   </tr>

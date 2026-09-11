@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Poppins } from "next/font/google";
 import { Toaster } from "sonner";
+import { RuntimeBrand } from "@/components/brand/runtime-brand";
 import "./globals.css";
 
 // Directive item 31 / Phase 3 Component Plan "Font loading": next/font/google
@@ -37,6 +38,8 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${poppins.variable}`}>
       <body className="min-h-screen font-sans antialiased">
+        {/* Runtime brand tokens (flag-gated; null = static Starter palette). */}
+        <RuntimeBrand />
         {children}
         {/*
          * pattern: server-action -> client toast, matching Portal's own

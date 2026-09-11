@@ -87,6 +87,13 @@ const EXPECTED_ENTRIES: Record<keyof typeof AUDIT_ACTIONS, string> = {
   ADMIN_ACCESS_DENIED: "admin.access.denied",
   RATE_LIMIT_BLOCKED: "rate_limit.blocked",
   FLAG_UPDATED: "admin.flag.updated",
+  TICKET_STATUS_CHANGED: "ticket.status_changed",
+  TICKET_ASSIGNED: "ticket.assigned",
+  TICKET_RECLASSIFIED: "ticket.reclassified",
+  TICKET_AREA_CHANGED: "ticket.area_changed",
+  TICKET_PRIORITY_CHANGED: "ticket.priority_changed",
+  FEEDBACK_PROMOTED_TO_TICKET: "feedback.promoted_to_ticket",
+  BRANDING_UPDATED: "branding.updated",
 };
 
 const EXPECTED_COUNT = Object.keys(EXPECTED_ENTRIES).length;

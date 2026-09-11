@@ -15,11 +15,21 @@ Single backlog ledger. Reconcile in the same commit that creates or resolves an 
 - [x] Phase 2 — Apps: portal + admin + `packages/ui` + `packages/tokens`
       (2026-09-10, work-log: 2026-09-10-phase-2-portal-admin-apps; see its
       Deviations section)
-- [ ] Phase 3 — Platform features: email queue + cron + admin viewer + Resend webhook;
-      feedback + prompt card + admin triage; what's-new; helpdesk (tickets/messages/
-      actions, portal Support, admin triage queue, promote-feedback-to-ticket, email
-      triggers); brand engine (`packages/brand` + `packages/tokens` + admin branding
-      editor + `check:brand-scope`); maintenance cron + `/api/health`
+- [x] Phase 3 — Platform features (2026-09-11, work-log:
+      2026-09-11-phase-3-helpdesk-brand-maintenance): helpdesk (tickets/messages/
+      actions, portal Support, admin triage queue, promote-feedback-to-ticket,
+      5 queued email triggers); brand engine (`packages/brand` contract/OKLCH
+      generator/BrandTokens emitter + admin branding editor + `ui.brand_theming`
+      flag + `check-brand-scope` tripwire + `pnpm brand:generate`); maintenance
+      cron repaired (ancestor-table refs removed, invite-token GC added) +
+      `/api/health` on both apps. Email queue/cron/webhook + feedback + what's-new
+      had already landed with Phase 2's port.
+- [ ] Helpdesk follow-ups (from Phase 3's SHIP WITH NOTES): message attachments
+      (needs blob storage — schema comment marks the extension point in
+      ticket_messages); type-pairing FONT WIRING (branding stores the pairing but
+      the apps' next/font loading doesn't switch faces yet); open-tickets count in
+      `kit:status`; admin roles UI surfacing `admin.tickets`/`admin.branding` is
+      automatic via FEATURE_CATALOG (verified) — no action
 - [ ] Phase 4 — Mobile: `apps/shell` (Capacitor 8 + GoogleSignInPlugin + push
       scaffolding), portal web bridge (use-is-native, device registrar, deep links,
       AASA, AppVersionGate + `app_release_policy` + admin editor), `apps/mobile` (Expo +

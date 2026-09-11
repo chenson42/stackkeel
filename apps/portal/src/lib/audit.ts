@@ -49,6 +49,10 @@ export const AUDIT_ACTIONS = {
   // Password-reset flow (unauthenticated; no current-password proof required)
   USER_PASSWORD_RESET_REQUESTED: "user.password_reset_requested",
   USER_PASSWORD_RESET_COMPLETED: "user.password_reset_completed",
+  // Helpdesk (module `helpdesk`) — filing is audited (it fans out email to
+  // every operator); ordinary thread replies are not (audit-exempt at the
+  // call site).
+  TICKET_FILED: "ticket.filed",
   // TOTP verification attempts (written from src/app/(auth)/totp/actions.ts)
   TOTP_VERIFY_FAILED: "totp.verify_failed",
   TOTP_VERIFY_SUCCEEDED: "totp.verify_succeeded",

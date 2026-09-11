@@ -14,12 +14,14 @@ const PUBLIC_PATHS = new Set([
   "/reset-password",
 ]);
 
-// The kit portal ships zero feature-gated route families — every signed-in
-// route (/home, /whats-new, /feedback, /account/*) is auth-only. When a
-// fork adds one, it gets an explicit entry here (first match wins) AND the
-// same check in the destination page; the tile registry's isVisible must
-// use the identical feature key.
-const PROTECTION_RULES: Array<{ pattern: RegExp; required: string }> = [];
+// Feature-gated route families (first match wins). Every entry here has
+// the SAME check in the destination page (the honest denied state) and the
+// identical feature key in the tile registry's isVisible — three surfaces,
+// one key, never a second permission vocabulary.
+const PROTECTION_RULES: Array<{ pattern: RegExp; required: string }> = [
+  // Helpdesk (module `helpdesk`): file/read own support tickets.
+  { pattern: /^\/support(\/|$)/, required: "tickets.file" },
+];
 
 export async function proxy(req: NextRequest) {
   const { pathname } = req.nextUrl;

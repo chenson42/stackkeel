@@ -106,6 +106,19 @@ export const AUDIT_ACTIONS = {
   // already ships (apps/admin/src/app/(app)/audit/page.tsx reads this app's
   // own audit_events table alongside a predecessor app's and Portal's).
   FLAG_UPDATED: "admin.flag.updated",
+  // Helpdesk operator mutations (module `helpdesk`). Every ticket STATE
+  // change is audited — status/assignment/vocabulary edits are the
+  // operator-privilege mutations; ordinary thread replies are content
+  // authoring and carry an audit-exempt at the call site instead.
+  TICKET_STATUS_CHANGED: "ticket.status_changed",
+  TICKET_ASSIGNED: "ticket.assigned",
+  TICKET_RECLASSIFIED: "ticket.reclassified",
+  TICKET_AREA_CHANGED: "ticket.area_changed",
+  TICKET_PRIORITY_CHANGED: "ticket.priority_changed",
+  FEEDBACK_PROMOTED_TO_TICKET: "feedback.promoted_to_ticket",
+  // Branding (module `core`): the brand row drives every page's rendered
+  // identity — a defacement vector, so every save is audited.
+  BRANDING_UPDATED: "branding.updated",
 } as const;
 
 export type AuditAction = (typeof AUDIT_ACTIONS)[keyof typeof AUDIT_ACTIONS];

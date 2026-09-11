@@ -1,4 +1,4 @@
-import { Users, Inbox, ShieldCheck, Mail, Flag, MessageSquare, KeyRound } from "lucide-react";
+import { Users, Inbox, ShieldCheck, Mail, Flag, MessageSquare, KeyRound, LifeBuoy, Palette } from "lucide-react";
 import { AppSidebar, type SidebarNavGroup } from "@repo/ui";
 
 // Thin adapter over the shared @repo/ui AppSidebar primitive
@@ -23,6 +23,8 @@ export function AppSidebarNav({
   canEmailQueue,
   canFlags,
   canFeedback,
+  canTickets,
+  canBranding,
 }: {
   canUsers: boolean;
   canRoles: boolean;
@@ -30,6 +32,8 @@ export function AppSidebarNav({
   canEmailQueue: boolean;
   canFlags: boolean;
   canFeedback: boolean;
+  canTickets: boolean;
+  canBranding: boolean;
 }) {
   const groups: SidebarNavGroup[] = [
     {
@@ -62,7 +66,9 @@ export function AppSidebarNav({
   // Feedback joins the same group (Increment 6, step 6a): cross-app content
   // oversight, the same family as Audit log/Email queue, not identity
   // administration (Directory) or configuration (Platform).
-  if (canAudit || canEmailQueue || canFeedback) {
+  // Tickets sits with Feedback (module `helpdesk`): both are cross-app
+  // content oversight; promotion flows from one queue into the other.
+  if (canAudit || canEmailQueue || canFeedback || canTickets) {
     groups.push({
       id: "monitoring",
       label: "Monitoring",
@@ -70,6 +76,7 @@ export function AppSidebarNav({
         ...(canAudit ? [{ href: "/audit", label: "Audit log", icon: <ShieldCheck /> }] : []),
         ...(canEmailQueue ? [{ href: "/email-queue", label: "Email queue", icon: <Mail /> }] : []),
         ...(canFeedback ? [{ href: "/feedback", label: "Feedback", icon: <MessageSquare /> }] : []),
+        ...(canTickets ? [{ href: "/tickets", label: "Tickets", icon: <LifeBuoy /> }] : []),
       ],
     });
   }
@@ -77,11 +84,14 @@ export function AppSidebarNav({
   // "Platform" is this app's first cross-app-configuration group, as
   // distinct from Monitoring (read-only observability) and Directory
   // (identity administration) — 2026-09-05-admin-menu-structure.
-  if (canFlags) {
+  if (canFlags || canBranding) {
     groups.push({
       id: "platform",
       label: "Platform",
-      items: [{ href: "/flags", label: "Feature flags", icon: <Flag /> }],
+      items: [
+        ...(canFlags ? [{ href: "/flags", label: "Feature flags", icon: <Flag /> }] : []),
+        ...(canBranding ? [{ href: "/branding", label: "Branding", icon: <Palette /> }] : []),
+      ],
     });
   }
 

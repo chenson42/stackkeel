@@ -261,6 +261,12 @@ export const feedback = pgTable(
     appVersion: text("app_version"),
     // 'new' | 'triaged' | 'done' | 'declined' — text, not pgEnum.
     status: text("status").notNull().default("new"),
+    // Set when an operator promotes this row into a helpdesk ticket
+    // (module `helpdesk`; column added by 0006_helpdesk.sql). Plain uuid,
+    // not a Drizzle FK — support.ts already imports platform.ts, and a
+    // references() here would close that loop into a circular module
+    // dependency. The real FK constraint lives in the migration.
+    promotedToTicketId: uuid("promoted_to_ticket_id"),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),

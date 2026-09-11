@@ -1,0 +1,30 @@
+{
+  "name": "@repo/brand",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./contract": "./src/contract.ts",
+    "./generate": "./src/generate.ts",
+    "./contrast": "./src/contrast.ts",
+    "./brand-tokens": "./src/brand-tokens.tsx"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "generate": "tsx scripts/generate-cli.ts"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0"
+  },
+  "devDependencies": {
+    "@repo/config": "workspace:*",
+    "react": "^19.0.0",
+    "@types/react": "^19.1.0",
+    
+    "tsx": "^4.19.0",
+    "typescript": "^5",
+    "vitest": "^3.0.0"
+  }
+}

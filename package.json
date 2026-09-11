@@ -24,6 +24,7 @@
     "kit:status": "node scripts/kit/kit-status.mjs",
     "kit:verify": "node scripts/kit/kit-verify.mjs",
     "kit:strip": "node scripts/kit/strip-module.mjs",
+    "brand:generate": "pnpm --filter @repo/brand run generate",
     "stats:escape": "node scripts/stats-escape.mjs",
     "prepare": "bash scripts/install-hooks.sh"
   },

@@ -110,6 +110,7 @@ export async function listFeedback(
       contextPath: feedback.contextPath,
       appVersion: feedback.appVersion,
       status: feedback.status,
+      promotedToTicketId: feedback.promotedToTicketId,
       createdAt: feedback.createdAt,
       // PII CONSTRAINT: users.name only — NEVER users.email.
       memberName: users.name,

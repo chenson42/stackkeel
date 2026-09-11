@@ -22,6 +22,7 @@ const TRIPWIRES = [
   "check-agent-symbols.mjs",
   "check-secrets.mjs",
   "check-sql-date.mjs",
+  "check-brand-scope.mjs",
 ];
 
 const results = [];
