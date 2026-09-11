@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 96" width="420" height="96" role="img" aria-label="Stackkeel PORTAL">
+  <rect width="96" height="96" rx="20" fill="#3b82f6"/><g fill="#fff"><path d="M36 18 L80 18 L68 34 L24 34 Z"/><path d="M22 40 L44 40 L44 56 L22 56 Z"/><path d="M50 40 L74 40 L74 56 L50 56 Z"/><path d="M28 62 L72 62 L60 78 L16 78 Z"/></g>
+  <text x="116" y="63" font-family="ui-sans-serif, system-ui, sans-serif" font-size="44" font-weight="700" fill="currentColor">Stackkeel</text>
+  <text x="342" y="63" font-family="ui-sans-serif, system-ui, sans-serif" font-size="30" font-weight="500" fill="#5b6472" letter-spacing="2">PORTAL</text>
+</svg>

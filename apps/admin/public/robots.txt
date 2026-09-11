@@ -1,0 +1,4 @@
+# The admin app is the platform control plane. Nothing here is intended
+# for search engines to index.
+User-agent: *
+Disallow: /

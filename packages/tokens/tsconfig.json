@@ -1,0 +1,5 @@
+{
+  "extends": "@repo/config/tsconfig.base.json",
+  "compilerOptions": { "plugins": [] },
+  "include": ["src"]
+}

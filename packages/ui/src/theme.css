@@ -1,0 +1,103 @@
+/*
+ * Shared brand identity — the static base layer.
+ *
+ * Each app's own `@theme` block (apps/<app>/src/app/globals.css) maps
+ * Tailwind's color/font slots to these values instead of independently
+ * chosen literals. Per-app additions stay in each app's stylesheet:
+ * `--identity-500` (the ONLY per-app value — see BRANDING.md), chart
+ * tokens, and component rules.
+ *
+ * "Starter Blue" is the kit's placeholder brand. /personalize replaces the
+ * ramp below via `pnpm brand:generate` (the OKLCH generator, Phase 3);
+ * until then these are a hand-tuned Tailwind-blue-shaped scale that honors
+ * BRANDING.md's step semantics (500 = identity only, 700 = icons/large
+ * text on white, 900 = button fills and body text on brand surfaces).
+ *
+ * Dark mode: class strategy (`.dark` on <html>, toggled by next-themes).
+ * The dark values are derived independently — not a CSS inversion — so
+ * contrast floors hold in both schemes.
+ */
+
+:root {
+  /* Brand tonal scale — Starter Blue placeholder. */
+  --brand-50: #eff6ff;
+  --brand-100: #dbeafe;
+  --brand-200: #bfdbfe;
+  --brand-300: #93c5fd;
+  --brand-500: #3b82f6;
+  --brand-700: #1d4ed8;
+  --brand-900: #1e3a8a;
+
+  /* Interactive / shadcn-shaped tokens — the unified identity. */
+  --primary: var(--brand-900);
+  --primary-hover: var(--brand-700);
+  --primary-foreground: #ffffff;
+
+  --accent: var(--brand-700);
+  --accent-foreground: #ffffff;
+
+  --secondary: #f2f4f7;
+  --secondary-foreground: #364152;
+  --muted: #f7f8fa;
+  --muted-foreground: #5b6472;
+  --destructive: #dc2626;
+  --destructive-foreground: #ffffff;
+  --success: #15803d;
+  --warning: #b45309;
+  --info: var(--brand-700);
+  --border: #e7eaee;
+  --input: #e7eaee;
+  --ring: var(--brand-500);
+
+  --background: #ffffff;
+  --foreground: #1f2733;
+  --card: #ffffff;
+  --card-foreground: #1f2733;
+  --popover: #ffffff;
+  --popover-foreground: #1f2733;
+
+  --radius: 0.5rem;
+
+  /* Type — variable names are centralized here; each app loads its own
+   * fonts (next/font/google in its layout.tsx) under matching names. */
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-heading: var(--font-heading-face), var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+}
+
+.dark {
+  --brand-50: #172137;
+  --brand-100: #1c2a49;
+  --brand-200: #23365f;
+  --brand-300: #2f4a85;
+  --brand-500: #60a5fa;
+  --brand-700: #93c5fd;
+  --brand-900: #dbeafe;
+
+  --primary: var(--brand-700);
+  --primary-hover: var(--brand-500);
+  --primary-foreground: #0b1220;
+
+  --accent: var(--brand-500);
+  --accent-foreground: #0b1220;
+
+  --secondary: #1c2430;
+  --secondary-foreground: #cdd5df;
+  --muted: #161d27;
+  --muted-foreground: #97a1af;
+  --destructive: #f87171;
+  --destructive-foreground: #0b1220;
+  --success: #4ade80;
+  --warning: #fbbf24;
+  --info: var(--brand-500);
+  --border: #273140;
+  --input: #273140;
+  --ring: var(--brand-500);
+
+  --background: #0e141c;
+  --foreground: #e3e8ef;
+  --card: #121a24;
+  --card-foreground: #e3e8ef;
+  --popover: #121a24;
+  --popover-foreground: #e3e8ef;
+}

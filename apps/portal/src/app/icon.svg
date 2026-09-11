@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96" role="img" aria-label="Stackkeel">
+  <rect width="96" height="96" rx="20" fill="#3b82f6"/>
+  <g fill="#ffffff">
+    <path d="M36 18 L80 18 L68 34 L24 34 Z"/>
+    <path d="M22 40 L44 40 L44 56 L22 56 Z"/>
+    <path d="M50 40 L74 40 L74 56 L50 56 Z"/>
+    <path d="M28 62 L72 62 L60 78 L16 78 Z"/>
+  </g>
+</svg>

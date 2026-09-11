@@ -1,0 +1,37 @@
+node_modules/
+.next/
+out/
+build/
+dist/
+
+.env
+.env.local
+.env*.local
+
+.DS_Store
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+.vercel
+.idea/
+.vscode/
+*.tsbuildinfo
+next-env.d.ts
+
+# Rendered deck output (slides.md is the source of truth)
+# slides.pdf IS committed so viewers can grab it without a Marp install
+deck/slides.pptx
+deck/slides.html
+
+# Test output
+coverage/
+/test-results/
+playwright-report/
+
+# Playwright storageState — contains live session cookies; never commit
+e2e/support/.auth/
+
+# Pre-push gate marker (scripts/pre-push-gate.mjs --stamp) — per-machine, never committed
+.claude/pre-push-ok.json

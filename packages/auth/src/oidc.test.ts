@@ -46,7 +46,7 @@ describe("oidcProviders", () => {
       AUTH_OIDC_ID: "id",
       AUTH_OIDC_SECRET: "secret",
       AUTH_OIDC_NAME: "Corp",
-    } as NodeJS.ProcessEnv);
+    } as unknown as NodeJS.ProcessEnv);
     expect(env).toEqual({
       issuer: "https://idp.example.com",
       clientId: "id",

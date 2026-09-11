@@ -1,0 +1,14 @@
+{
+  "name": "@repo/tokens",
+  "version": "0.0.0",
+  "private": true,
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@repo/config": "workspace:*",
+    "typescript": "^5"
+  }
+}

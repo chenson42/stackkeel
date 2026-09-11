@@ -129,6 +129,31 @@ export const passwordResetTokens = pgTable(
   ],
 );
 
+// Operator-initiated invites (admin "create user" → set-password email).
+// Deliberately a SEPARATE table from password_reset_tokens even though the
+// shape matches: the TTLs differ by design (an invite waits days; a
+// self-serve reset expires in minutes), and revoking one class must never
+// touch the other. userId is UNIQUE — re-inviting overwrites the prior
+// token rather than accumulating live links.
+export const inviteTokens = pgTable(
+  "invite_tokens",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    token: text("token").notNull(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    uniqueIndex("ix_invite_token").on(t.token),
+    uniqueIndex("ix_invite_user").on(t.userId),
+  ],
+);
+
 // ---- Durable outbound email queue ------------------------------------
 export const emailQueue = pgTable(
   "email_queue",

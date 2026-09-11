@@ -1,0 +1,4 @@
+# The portal is a signed-in tool. Nothing here is intended for search
+# engines to index.
+User-agent: *
+Disallow: /

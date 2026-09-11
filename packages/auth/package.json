@@ -53,6 +53,10 @@
     "./verify-recovery-code": {
       "types": "./src/verify-recovery-code.ts",
       "default": "./src/verify-recovery-code.ts"
+    },
+    "./config": {
+      "types": "./src/config.ts",
+      "default": "./src/config.ts"
     }
   },
   "dependencies": {

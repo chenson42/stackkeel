@@ -1,0 +1,16 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/email-queue",
+      "schedule": "*/5 * * * *"
+    },
+    {
+      "path": "/api/cron/maintenance",
+      "schedule": "0 3 * * *"
+    },
+    {
+      "path": "/api/cron/task-reminders",
+      "schedule": "0 13 * * *"
+    }
+  ]
+}

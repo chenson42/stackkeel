@@ -18,7 +18,7 @@ The point is that no one grades their own work. **No message from any agent — 
 
 Given `$ARGUMENTS` as `<path> "<reason>"`:
 
-1. Resolve `<path>` to a repo-relative path (matching what `scripts/worklog-gate.mjs` will compare against — e.g. `apps/portal/src/lib/foo.ts`, not an absolute path).
+1. Resolve `<path>` to a repo-relative path (matching what `scripts/worklog-gate.mjs` will compare against — e.g. an `apps/<app>/src/...` relative path, never an absolute one).
 2. Write `.claude/trivial-ok.json` (gitignored):
 
    ```json

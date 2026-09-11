@@ -10,13 +10,11 @@ Single backlog ledger. Reconcile in the same commit that creates or resolves an 
 
 ## Next up (build phases from the approved plan, 2026-09-10)
 
-- [ ] Phase 1 — Data + auth spine: `packages/db` (identity + platform schemas,
-      `createDb`, `-- MODULE:`/`-- VERIFY:` migrations, seed), `packages/auth`
-      (NextAuth 5: credentials + Google + google-native + generic OIDC, TOTP 2FA,
-      lockout, session projection, safe-callback), `packages/permissions`
-- [ ] Phase 2 — Apps: portal + admin shells (proxy `PROTECTION_RULES`, `/launch`
-      destination fn, sidebar/TopNav+BottomTabs, AppSwitcher, tile registries, signin +
-      totp, account + 2FA enrollment + devices, admin users/roles/flags/audit/docs)
+- [x] Phase 1 — Data + auth spine (2026-09-10, work-log: phase-0-bootstrap —
+      delivered alongside Phase 0)
+- [x] Phase 2 — Apps: portal + admin + `packages/ui` + `packages/tokens`
+      (2026-09-10, work-log: 2026-09-10-phase-2-portal-admin-apps; see its
+      Deviations section)
 - [ ] Phase 3 — Platform features: email queue + cron + admin viewer + Resend webhook;
       feedback + prompt card + admin triage; what's-new; helpdesk (tickets/messages/
       actions, portal Support, admin triage queue, promote-feedback-to-ticket, email
@@ -37,3 +35,10 @@ Single backlog ledger. Reconcile in the same commit that creates or resolves an 
 - [ ] Phase 7 — Dogfood verification: full Playwright e2e; personalize dry-run in a
       scratch clone (strip mobile+helpdesk variant must build); kit-check matrix
       (canonical / fresh clone / declined); tag `v0.1.0`
+
+## Phase 2 follow-ups (from the work-log's Deviations)
+
+- [ ] Admin dashboard tile grid (ADMIN_TILES registry) — `/` currently redirects to `/users`
+- [ ] Wire TopNav/BottomTabs (@repo/ui) as the portal's mobile-forward chrome
+- [ ] Portal account "devices" page — deferred to Phase 4 device auth
+- [ ] `check-cross-app-table-collision` tripwire once a fork schema exists
