@@ -9,7 +9,7 @@ hero:
     alt: Stackkeel mark
   actions:
     - text: Get started
-      link: /stackkeel/getting-started/
+      link: /getting-started/
       icon: right-arrow
     - text: GitHub
       link: https://github.com/chenson42/stackkeel

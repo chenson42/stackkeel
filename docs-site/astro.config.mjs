@@ -5,8 +5,7 @@ import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
 
 export default defineConfig({
-  site: "https://chenson42.github.io",
-  base: "/stackkeel",
+  site: "https://stackkeel.org",
   integrations: [
     starlight({
       title: "Stackkeel",
@@ -17,7 +16,7 @@ export default defineConfig({
       head: [
         {
           tag: "meta",
-          attrs: { property: "og:image", content: "https://chenson42.github.io/stackkeel/og.png" },
+          attrs: { property: "og:image", content: "https://stackkeel.org/og.png" },
         },
         {
           tag: "meta",

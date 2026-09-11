@@ -57,7 +57,7 @@ standard), and hit the same git-hook + CI enforcement.
 ## Documentation
 
 Full docs (getting started, architecture tour, the workflow, personalization and sync
-guides, module catalog): **https://chenson42.github.io/stackkeel** — or start with
+guides, module catalog): **https://stackkeel.org** — or start with
 [AGENTS.md](./AGENTS.md) and [docs/](./docs/) in the repo.
 
 ## Requirements
