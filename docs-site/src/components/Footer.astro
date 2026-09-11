@@ -1,0 +1,25 @@
+---
+// Extends Starlight's default footer (prev/next pagination) with a site-wide
+// credits line: license, repository, and where to report issues.
+import Default from "@astrojs/starlight/components/Footer.astro";
+---
+
+<Default><slot /></Default>
+<div class="site-footer">
+  <a href="https://github.com/chenson42/stackkeel/blob/main/LICENSE">MIT licensed</a>
+  · <a href="https://github.com/chenson42/stackkeel">GitHub</a>
+  · <a href="https://github.com/chenson42/stackkeel/issues">Report an issue</a>
+</div>
+
+<style>
+  .site-footer {
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--sl-color-hairline);
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-3);
+  }
+  .site-footer a {
+    color: var(--sl-color-gray-2);
+  }
+</style>

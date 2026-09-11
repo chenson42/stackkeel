@@ -3,6 +3,12 @@ title: Stackkeel vs. create-next-app, T3, and SaaS Boilerplates
 description: "How Stackkeel compares to create-next-app, create-t3-app, MakerKit, and other Next.js starter kits: what each gives you on day one, and where an AI-native development workflow changes the picture."
 ---
 
+*Comparison reviewed September 2026 against each project's own documentation:
+[create-next-app](https://nextjs.org/docs/app/api-reference/cli/create-next-app),
+[create-t3-app](https://create.t3.gg/), [MakerKit](https://makerkit.dev/),
+[TurboStarter](https://www.turbostarter.dev/). If something here has gone stale,
+[open an issue](https://github.com/chenson42/stackkeel/issues).*
+
 The honest starting point: if you want a minimal framework scaffold, use
 `create-next-app`. If you want end-to-end type safety and nothing else decided for
 you, `create-t3-app` is excellent. Stackkeel occupies a different spot. It is an

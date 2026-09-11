@@ -47,6 +47,8 @@ Gemini CLI, or any assistant that reads [AGENTS.md](https://agents.md) and
 | **Branding** | One seed color → WCAG-safe light/dark themes, admin branding editor |
 | **Stack** | Next.js 16 · React 19 · TypeScript · Tailwind 4 · Drizzle + Postgres · Turborepo + pnpm · Vitest + Playwright |
 
+## A starter kit that stays current
+
 The kit has a lifecycle, not just a download: personalization strips the modules
 you don't want, `/upstream-sync` pulls kit improvements as a reviewable punch-list,
 and `/downstream-sync` packages your generic fixes for contribution back.

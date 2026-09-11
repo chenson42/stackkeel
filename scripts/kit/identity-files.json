@@ -123,6 +123,10 @@
     {
       "path": "docs-site/public/robots.txt",
       "note": "Sitemap URL carries the docs-site domain; personalize points it at the fork's own Pages URL or removes it"
+    },
+    {
+      "path": "docs-site/src/components/Footer.astro",
+      "note": "Footer links carry the canonical repo URL; personalize points them at the fork's repository"
     }
   ]
 }

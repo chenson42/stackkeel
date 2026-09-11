@@ -3,17 +3,29 @@
 // point `site`/`base` at their own Pages URL during personalization).
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
+import starlightLlmsTxt from "starlight-llms-txt";
+
+// Forks ship this docs-site as a rebrandable skeleton. Their deployments must
+// not compete with (or duplicate) the canonical site in search, so the build
+// emits <meta name="robots" content="noindex"> unless the deploy explicitly
+// opts in — the canonical repo's docs workflow sets DOCS_INDEXABLE=true.
+const indexable = process.env.DOCS_INDEXABLE === "true";
 
 export default defineConfig({
   site: "https://stackkeel.org",
   integrations: [
     starlight({
+      plugins: [starlightLlmsTxt()],
+      components: {
+        Footer: "./src/components/Footer.astro",
+      },
       title: "Stackkeel",
       description:
-        "Cross-AI monorepo starter kit: portal + admin + native shell + native app, with built-in maintenance, helpdesk, theming, and a personalization/sync loop.",
+        "Open-source Next.js monorepo starter kit for AI-assisted development: auth, admin, RBAC, audit logging, email, helpdesk, theming, and mobile apps, with one workflow for Claude Code, Codex, Copilot, and Cursor.",
       logo: { src: "./src/assets/logo.png", alt: "Stackkeel mark" },
       favicon: "/favicon.png",
       head: [
+        ...(indexable ? [] : [{ tag: "meta", attrs: { name: "robots", content: "noindex" } }]),
         {
           tag: "meta",
           attrs: { property: "og:image", content: "https://stackkeel.org/og.png" },
