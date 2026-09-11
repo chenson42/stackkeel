@@ -73,7 +73,22 @@ Single backlog ledger. Reconcile in the same commit that creates or resolves an 
 - [ ] Admin dashboard tile grid (ADMIN_TILES registry) — `/` currently redirects to `/users`
 - [ ] Wire TopNav/BottomTabs (@repo/ui) as the portal's mobile-forward chrome
 - [x] Portal account "devices" page — shipped in Phase 4 (`/account/devices`)
-- [ ] `check-cross-app-table-collision` tripwire once a fork schema exists
+- [ ] `check-cross-app-table-collision` tripwire once a fork schema exists —
+      spec now at `docs/starter-contributions/incoming/03-…` (PR #7); compare
+      physical `schema.table`, never bare names
+
+## Contribution triage — PR #7 specs (2026-09-11, all accepted as backport-ready)
+
+- [ ] Implement `check-schema-prerequisites.mjs` per incoming/01 — the clause
+      that matters: a changed migration with NO `-- VERIFY:` is a FAIL, never a
+      pass. Unblocks removing #6's marker in pre-push/SKILL.md + database-admin
+- [ ] Implement `feedback-check.mjs` per incoming/04 — count-only SessionStart
+      script; the invariant test (emitted string contains nothing beyond the
+      integer) is the point, not an extra. Unblocks the process-feedback marker
+- [ ] Implement `check-driver-capability.mjs` per incoming/02 — admin
+      users/[id]/actions.ts:134 already cites its resolution rule in prose
+- [x] Spec 05 stamp-chaining trap — documented in pre-push/SKILL.md (same
+      commit as this triage)
 
 ## Phase 4 follow-ups (from the work-log's Phase 6 NOTES)
 

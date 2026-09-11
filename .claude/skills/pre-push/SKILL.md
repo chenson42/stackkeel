@@ -173,6 +173,15 @@ Report results **per touched surface**, then an overall verdict:
 node scripts/pre-push-gate.mjs --stamp
 ```
 
+**Run the stamp and the push as two separate commands.** A chained
+`--stamp && git push` is rejected no matter what: the PreToolUse hook fires
+before any part of the command string executes, so it inspects the marker that
+existed *before* this command — never the one the same command was about to
+create. This is distinct from the note below about committing after the stamp:
+that is a valid marker invalidated by a later commit; this is a marker that
+does not exist yet. Conflating them sends you back through the whole checklist
+for nothing.
+
 The PreToolUse hook that reads this marker blocks **any** in-session `git push` until a marker exists matching the current HEAD. Committing anything after the stamp invalidates it, so re-run `/pre-push` after late commits.
 
 **Do not push.** The user pushes manually.
