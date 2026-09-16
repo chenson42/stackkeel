@@ -21,6 +21,18 @@ The kit ships an opinionated AI-assisted development workflow, described tool-ne
 
 Every feature gets a work-log file *before* code (`docs/work-log/`), classified Trivial / Polish / Feature / Spike. Loop-backs return to the earliest phase where the failure originated.
 
+## Which model runs which role
+
+In Claude Code each role is a subagent under `.claude/agents/`, and each agent pins a model in its frontmatter. The tier follows the cost of a wrong answer, not the size of the task ([DECISION-007](https://github.com/chenson42/stackkeel/blob/main/docs/decisions.md)):
+
+| Tier | Agents | Why |
+|---|---|---|
+| **fable** (most capable) | analyst, qa | The two verdict gates whose documented failure mode is rubber-stamping. Phase 1 shapes every downstream phase; Phase 5's derive-then-diff and Phase 6's SHIP IT are the last places a bad claim can be caught. Both are read-only and run once per feature, so the premium buys judgment, not token volume. |
+| **opus** | architect, tech-lead, api-developer, database-admin, mobile-developer | Design rulings and the implementers whose mistakes are expensive to reverse: invariant compliance and code review, the API contract and data model, auth/permission/audit server code, migrations, and native Swift/Kotlin with thin test coverage. |
+| **sonnet** | ux-developer, full-stack-developer, deployment-engineer | Contract-driven, bounded, or command-and-read work that qa and the UX audit checklist re-verify afterward. Highest token volume per feature, lowest marginal value from a stronger model. |
+
+Rejected alternatives: all-sonnet (puts the weakest judgment on the phases the evidence rules exist to harden), all-fable (roughly twice the per-token cost of opus with no measured gain on contract-driven UI work, and its longer turns slow the high-volume implementers), haiku for any role (no roster agent is a bulk-search role), and `inherit` (phase quality would drift with whichever model the operator launched the session on). The per-invocation model override remains the escape hatch in both directions. Other assistants play the roles sequentially with whatever model they run; the phase contract is what's binding, not the tiering.
+
 ## Evidence discipline
 
 A completed phase carries **evidence, not checkmarks**: claims are either *Verified* (the implementation was read, file and line range cited) or *Indicative* (everything else — grep hits, filenames, comments, prior docs). Indicative can motivate a claim and can never support one. Each phase re-derives its predecessor's load-bearing claims *before* reading the claimed answers, then diffs — trust is earned per handoff, not assumed. Work-log entries include a "What was NOT verified" section; honesty about the gaps is what makes the ledger useful.
