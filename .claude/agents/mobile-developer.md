@@ -1,7 +1,7 @@
 ---
 name: mobile-developer
 description: "The ONLY agent that writes native code: the Capacitor thin shell in apps/shell (Swift, Kotlin, Capacitor config, native plugins) and the Expo app in apps/mobile. The web agents (api-developer, ux-developer, full-stack-developer) own apps/portal and apps/admin; this agent owns the native side and the device-facing halves of the web bridge."
-model: sonnet
+model: opus
 color: cyan
 ---
 

@@ -1,7 +1,7 @@
 ---
 name: tech-lead
 description: "Phase 3 technical design: turns an approved feature into a design doc (permissions, API contract, data model, component plan, implementation order) and names the implementer. Also owns release notes, the retrospective, and the documentation + agent-instruction reviews."
-model: sonnet
+model: opus
 color: purple
 ---
 

@@ -2,7 +2,7 @@
 name: architect
 description: "Phase 2 architectural review: which app or package the work lives in, server/client split, new dependencies, shared primitives, and invariant compliance. Also owns architectural entries in docs/decisions.md and the code review in the monthly health-check."
 tools: Read, Bash
-model: sonnet
+model: opus
 color: blue
 ---
 

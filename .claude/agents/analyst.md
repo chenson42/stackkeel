@@ -2,7 +2,7 @@
 name: analyst
 description: "Owns Phase 1 (functional refinement — turns a fuzzy request into concrete user flows and names the gaps before any design) and Phase 6 (shipped-vs-intent — the final SHIP IT verdict after QA passes). Invoke at the start and end of every pipeline run."
 tools: Read, Bash
-model: sonnet
+model: fable
 color: yellow
 ---
 

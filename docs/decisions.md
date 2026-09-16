@@ -6,6 +6,43 @@ prior project.
 
 ---
 
+## DECISION-007: Agent model tiering — fable for verdict gates, opus for design and irreversible implementation, sonnet for contract-driven work
+
+**Date:** 2026-09-16
+
+Each `.claude/agents/*.md` pins a `model:` in frontmatter instead of the previous
+all-`sonnet` roster. The tier follows the cost of a wrong answer, not the size of the
+task:
+
+- **`fable` — analyst, qa.** These are the two gates whose documented failure mode is
+  rubber-stamping (Evidence & Verification: four ancestor incidents where a false
+  capability claim rested on a string match and survived review). Phase 1 shapes every
+  downstream phase; Phase 5's derive-then-diff and Phase 6's SHIP IT are the last two
+  places a bad claim can be caught. Both agents are read-only and run once per feature, so
+  the premium buys judgment, not token volume.
+- **`opus` — architect, tech-lead, api-developer, database-admin, mobile-developer.**
+  Design decisions and the implementers whose mistakes are expensive to reverse: invariant
+  rulings and code review, the API contract and data model, auth/permission/audit server
+  code, migrations (schema is the source of truth; `-- VERIFY:` predicates run against the
+  deploy target), and native Swift/Kotlin code with thin test coverage.
+- **`sonnet` — ux-developer, full-stack-developer, deployment-engineer.** Work that is
+  contract-driven (the UI consumes the work-log's API contract), bounded by definition
+  (full-stack is ~<150 lines), or command-and-read (build diagnosis, env vars), and that qa
+  and the UX audit checklist re-verify afterward. Highest token volume per feature, lowest
+  marginal value from a stronger model.
+
+Rejected: all-`sonnet` (the prior default — cheapest, but puts the weakest judgment on
+the phases the kit's own evidence rules exist to harden); all-`fable` (roughly 2× opus
+per token with no measured benefit on contract-driven UI work, and Fable's longer turns
+slow the high-volume implementers); `haiku` for any role (no roster agent is a bulk
+search role — the built-in Explore agent already covers that); `inherit` (session-model
+drift would make phase quality depend on which model the operator happened to launch
+with). Per-invocation override via the Agent tool's `model` parameter remains the escape
+hatch in both directions. Reasoning `effort` is left at each model's default; tune it in
+frontmatter only after a retrospective shows a phase is over- or under-thinking.
+
+---
+
 ## DECISION-006: Enforcement lives in git hooks + CI; assistant hooks are fast feedback only
 
 **Date:** 2026-09-10

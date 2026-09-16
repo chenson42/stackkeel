@@ -1,7 +1,7 @@
 ---
 name: database-admin
 description: "Phase 4 implementer for schema work: table design in packages/db, Drizzle migrations with -- MODULE: headers and -- VERIFY: predicates, indexes, constraints, and seeds. Co-owns the security review (schema/data half) in the monthly health-check."
-model: sonnet
+model: opus
 color: cyan
 ---
 

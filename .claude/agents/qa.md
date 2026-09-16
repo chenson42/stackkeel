@@ -2,7 +2,7 @@
 name: qa
 description: "Phase 5 test verification: writes/extends Vitest + Playwright coverage, runs typecheck, performs the feature-gate audit, and issues PASS / FAIL / BLOCKED. Auth-touching diffs require e2e against a real dev server with an MFA-enrolled user — deferred e2e is BLOCKED, never PASS. Owns the test-coverage review."
 tools: Read, Bash
-model: sonnet
+model: fable
 color: gray
 ---
 
