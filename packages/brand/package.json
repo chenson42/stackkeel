@@ -16,12 +16,12 @@
     "generate": "tsx scripts/generate-cli.ts"
   },
   "peerDependencies": {
-    "react": "^19.0.0"
+    "react": "^19.3.0"
   },
   "devDependencies": {
     "@repo/config": "workspace:*",
-    "react": "^19.0.0",
-    "@types/react": "^19.1.0",
+    "react": "^19.3.0",
+    "@types/react": "^19.3.0",
     
     "tsx": "^4.19.0",
     "typescript": "^5",
