@@ -12,7 +12,7 @@
     "build": "tsc --noEmit"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "2.2.0",
+    "@react-native-async-storage/async-storage": "3.1.1",
     "@repo/tokens": "workspace:*",
     "expo": "~57.0.21",
     "expo-constants": "~57.0.17",
