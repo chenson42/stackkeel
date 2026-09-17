@@ -25,7 +25,7 @@
     "@repo/permissions": "workspace:*",
     "@repo/tokens": "workspace:*",
     "@repo/ui": "workspace:*",
-    "@tanstack/react-table": "^8.21.3",
+    "@tanstack/react-table": "^9.2.4",
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.38.0",
     "bcryptjs": "^3.0.3",
