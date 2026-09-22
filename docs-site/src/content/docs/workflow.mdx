@@ -23,15 +23,16 @@ Every feature gets a work-log file *before* code (`docs/work-log/`), classified 
 
 ## Which model runs which role
 
-In Claude Code each role is a subagent under `.claude/agents/`, and each agent pins a model in its frontmatter. The tier follows the cost of a wrong answer, not the size of the task ([DECISION-007](https://github.com/chenson42/stackkeel/blob/main/docs/decisions.md)):
+In Claude Code each role is a subagent under `.claude/agents/`, and each agent pins both a model and a reasoning effort in its frontmatter. The tier follows the cost of a wrong answer, not the size of the task ([DECISION-008](https://github.com/chenson42/stackkeel/blob/main/docs/decisions.md)):
 
 | Tier | Agents | Why |
 |---|---|---|
-| **fable** (most capable) | analyst, qa | The two verdict gates whose documented failure mode is rubber-stamping. Phase 1 shapes every downstream phase; Phase 5's derive-then-diff and Phase 6's SHIP IT are the last places a bad claim can be caught. Both are read-only and run once per feature, so the premium buys judgment, not token volume. |
-| **opus** | architect, tech-lead, api-developer, database-admin, mobile-developer | Design rulings and the implementers whose mistakes are expensive to reverse: invariant compliance and code review, the API contract and data model, auth/permission/audit server code, migrations, and native Swift/Kotlin with thin test coverage. |
-| **sonnet** | ux-developer, full-stack-developer, deployment-engineer | Contract-driven, bounded, or command-and-read work that qa and the UX audit checklist re-verify afterward. Highest token volume per feature, lowest marginal value from a stronger model. |
+| **opus** | architect, database-admin, qa | Invariant compliance and code review; schema and migrations, where the source of truth is the schema and `-- VERIFY:` predicates run against the deploy target; and the last verdict before ship. |
+| **sonnet** | analyst, tech-lead, api-developer, mobile-developer, ux-developer, full-stack-developer, deployment-engineer | Everything else: work that is contract-driven, lands in a work-log the next phase independently re-derives, and is re-verified by qa and the UX audit checklist. |
 
-Rejected alternatives: all-sonnet (puts the weakest judgment on the phases the evidence rules exist to harden), all-fable (roughly twice the per-token cost of opus with no measured gain on contract-driven UI work, and its longer turns slow the high-volume implementers), haiku for any role (no roster agent is a bulk-search role), and `inherit` (phase quality would drift with whichever model the operator launched the session on). The per-invocation model override remains the escape hatch in both directions. Other assistants play the roles sequentially with whatever model they run; the phase contract is what's binding, not the tiering.
+Reasoning effort is pinned too — `high` everywhere except deployment-engineer (`medium`, since build diagnosis and env-var work is command-and-read).
+
+Rejected alternatives: keeping the previous roster's `fable` tier on the two verdict gates (at `effort: high` its cost ran out of proportion to the judgment it bought, and rubber-stamping is a discipline problem the evidence rules address rather than one a premium model reliably fixes); `effort: medium` roster-wide (the phases on cheaper models are exactly the ones that need the thinking budget); haiku for any role (no roster agent is a bulk-search role); and `inherit` (phase quality would drift with whichever model the operator launched the session on). The per-invocation model override remains the escape hatch in both directions — the right tool for a one-off hard task, rather than re-tiering the roster. Other assistants play the roles sequentially with whatever model they run; the phase contract is what's binding, not the tiering.
 
 ## Evidence discipline
 

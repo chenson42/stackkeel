@@ -6,9 +6,52 @@ prior project.
 
 ---
 
+## DECISION-008: Drop `fable` from the roster; pin reasoning `effort` explicitly
+
+**Date:** 2026-09-22
+
+Supersedes DECISION-007's tier assignment (its structure — tier by cost of a wrong answer,
+not size of the task — still holds). Two changes:
+
+1. **No agent runs `fable`.** DECISION-007 left reasoning `effort` at each model's default
+   and assumed the two verdict gates were cheap because they are read-only and run once per
+   feature. In practice the roster ran with `effort: high`, and `fable` at high effort burned
+   token budget out of proportion to the judgment it bought — the failure mode DECISION-007
+   was guarding against (rubber-stamping) is a discipline problem that the evidence rules
+   and derive-then-diff address, not something a premium model reliably fixes on its own.
+   `qa` moves to `opus` (it is the last gate before ship and it runs suites); `analyst`
+   moves to `sonnet` (Phase 1 shapes downstream work but produces prose, and Phase 6 diffs
+   shipped-vs-intent against a written description).
+2. **`effort` is now explicit in frontmatter, not left at the model default.** The cost of
+   the previous setup was invisible precisely because effort was implicit. Every agent pins
+   `effort: high` except `deployment-engineer` (`medium` — build diagnosis and env-var work
+   is command-and-read).
+
+Resulting roster:
+
+- **`opus`** — architect, database-admin, qa. Invariant rulings and code review; migrations
+  (schema is the source of truth, `-- VERIFY:` predicates run against the deploy target);
+  the last verdict before ship.
+- **`sonnet`** — analyst, tech-lead, api-developer, mobile-developer, ux-developer,
+  full-stack-developer, deployment-engineer. Everything else, including the design and
+  server-implementation roles DECISION-007 put on `opus`: they are contract-driven, land in
+  a work-log that the next phase re-derives, and are re-verified by qa and the UX audit
+  checklist.
+
+Rejected: keeping `fable` on one gate (the cost is per-turn, and one premium gate in a
+six-phase pipeline is not where the kit's defect escapes come from — `pnpm stats:escape`
+is the instrument, not intuition); dropping to `effort: medium` roster-wide (the phases
+with cheap models are exactly the ones that need the thinking budget); `haiku` for any role
+(unchanged from DECISION-007). Per-invocation override via the Agent tool's `model`
+parameter remains the escape hatch, and is the right tool for a one-off hard task rather
+than re-tiering the roster. Revisit at the next retrospective with escape-rate data.
+
+---
+
 ## DECISION-007: Agent model tiering — fable for verdict gates, opus for design and irreversible implementation, sonnet for contract-driven work
 
-**Date:** 2026-09-16
+**Date:** 2026-09-16 — **superseded by DECISION-008 (2026-09-22)** for the tier assignment;
+the tiering principle it states still holds.
 
 Each `.claude/agents/*.md` pins a `model:` in frontmatter instead of the previous
 all-`sonnet` roster. The tier follows the cost of a wrong answer, not the size of the

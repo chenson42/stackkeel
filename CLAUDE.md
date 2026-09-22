@@ -13,13 +13,15 @@ tooling that exists for Claude Code specifically.
 - **Agent roster** lives in `.claude/agents/` — one file per pipeline role (see AGENTS.md →
   Development Pipeline). Judgment agents (analyst, architect, qa) are tool-restricted to
   read-only.
-- **Model tiering** is set per agent in frontmatter (`model:`), rationale in
-  `docs/decisions.md` → DECISION-007. `fable` for the two verdict gates whose failure mode
-  is rubber-stamping (analyst, qa); `opus` for design and for implementers whose mistakes
-  are expensive to reverse (architect, tech-lead, api-developer, database-admin,
-  mobile-developer); `sonnet` for contract-driven, well-audited implementation
-  (ux-developer, full-stack-developer, deployment-engineer). Override per invocation with
-  the Agent tool's `model` parameter when a task is unusually hard or unusually routine.
+- **Model tiering** is set per agent in frontmatter (`model:` + `effort:`), rationale in
+  `docs/decisions.md` → DECISION-008 (which supersedes DECISION-007's assignment). `opus`
+  for invariant rulings, migrations, and the last gate before ship (architect,
+  database-admin, qa); `sonnet` for everything else — work that is contract-driven, lands
+  in a work-log the next phase re-derives, and is re-verified downstream. No agent runs
+  `fable`: at `effort: high` its cost was out of proportion to the judgment it bought.
+  Every agent pins `effort: high` except deployment-engineer (`medium`). Override per
+  invocation with the Agent tool's `model` parameter when a task is unusually hard or
+  unusually routine.
 - **Skills** live in `.claude/skills/` and are invocable as slash commands (`/new-feature`,
   `/pre-push`, `/personalize`, `/upstream-sync`, …). They follow the cross-tool SKILL.md
   standard, so treat them as the canonical procedure definitions, not Claude-only helpers.
