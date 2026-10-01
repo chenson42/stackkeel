@@ -26,13 +26,13 @@
     "@neondatabase/serverless": "^1.1.0",
     "@repo/permissions": "workspace:*",
     "bcryptjs": "^3.0.3",
-    "drizzle-orm": "^0.45.2",
+    "drizzle-orm": "^0.45.3",
     "pg": "^8.20.0"
   },
   "devDependencies": {
     "@repo/config": "workspace:*",
     "@types/pg": "^8.20.0",
-    "tsx": "^4.19.0",
+    "tsx": "^4.23.15",
     "typescript": "^5.9.0",
     "vitest": "^4.1.6"
   }
