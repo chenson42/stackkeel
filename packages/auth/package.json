@@ -63,7 +63,7 @@
     "@auth/drizzle-adapter": "^1.11.2",
     "@repo/db": "workspace:*",
     "@repo/permissions": "workspace:*",
-    "drizzle-orm": "^0.45.2",
+    "drizzle-orm": "^0.45.4",
     "next-auth": "5.0.0-beta.32",
     "otplib": "^13.4.0",
     "server-only": "^0.0.1"
